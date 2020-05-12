@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-import { Route, Switch } from "react-router-dom";
-
+import { Route, Switch, Redirect } from "react-router-dom";
+// 路由
 import { adminRouter } from "../../routes";
 
+// 请求的
 import { user } from "../../requests/login";
 
+// 组件
+import { Frame } from "../../components";
+
 //
-/* import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout; */
-
-// 
 
 export default function Admin() {
   const [username, setUsername] = useState("");
@@ -26,27 +22,29 @@ export default function Admin() {
 
   return (
     <div>
-      欢迎{username}
-      Admin
-
-
-
-      <Switch>
-        {
-          adminRouter.map((route) => {
-            return (
-              <Route
-                key={route.pathName}
-                path={route.pathName}
-                render={(routerProps) => {
-                  return <route.component {...routerProps} />;
-                }}
-                exact={route.exact}
-              />
-            );
-          })
-        }
-      </Switch>
+      {/*       欢迎{username}
+      Admin */}
+      <Frame username={ username } menus={ adminRouter }>
+        <Switch>
+          {
+            adminRouter.map((route) => {
+              return (
+                <Route
+                  key={route.pathName}
+                  path={route.pathName}
+                  exact={route.exact}
+                  render={(routerProps) => {
+                    return <route.component {...routerProps} />;
+                  }}
+                />
+              );
+            })
+          }
+          <Redirect to={adminRouter[0].pathName} from="/admin" exact />
+          <Redirect to='/NotFound' />
+        </Switch>
+      </Frame>
+      ,
     </div>
   );
 }

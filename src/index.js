@@ -40,7 +40,6 @@ ReactDOM.render(
         />
         {
           baseRouter.map((item) => {
-            console.log(item)
             return (
               <Route
                 key={item.pathName}

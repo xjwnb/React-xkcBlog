@@ -13,4 +13,3 @@ export const baseRouter = [
   }
 ]
 
-console.log(baseRouter)

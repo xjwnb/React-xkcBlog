@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 // 封装 axios 方法，返回值是 Promise
 export function request(options) {

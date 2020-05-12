@@ -5,6 +5,9 @@ import BlogList from "./BlogList/index.jsx";
 import Login from "./Login/index.jsx";
 import Dashboard from "./Dashboard/index.jsx";
 import NotFound from "./NotFound/index.jsx";
+import ArticleEdit from "./ArticleEdit/index.jsx";
+import WriteBlog from "./WriteBlog/index.jsx";
+
 
 export { 
   Admin, 
@@ -13,5 +16,7 @@ export {
   BlogList, 
   Login, 
   Dashboard,
-  NotFound 
+  NotFound,
+  ArticleEdit,
+  WriteBlog
 };
