@@ -1,7 +1,10 @@
-import {
+/* import {
   Blog,
   BlogList
-} from '../views'
+} from '../views' */
+import Blog from '../views/Blog'
+import BlogList from '../views/BlogList'
+
 
 export const blogRouter = [
   {
