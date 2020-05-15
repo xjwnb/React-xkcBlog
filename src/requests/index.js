@@ -6,23 +6,23 @@ export function request(options) {
     // 创建 axios 实例
     const instance = axios.create({
       baseURL: "http://localhost:8888",
-      timeout: 5000,
+      timeout: 100000,
     });
 
     // 响应拦截器
     instance.interceptors.response.use((res) => {
       // console.log(res.data);
       if (res.status === 200) {
-        // console.log(res);
+        console.log(res);
         return res.data;
       } else {
-        // console.log(res);
+        console.log(res);
       }
     });
 
     // 请求拦截器
     instance.interceptors.request.use((config) => {
-      // console.log(config);
+      console.log(config);
       return config;
     });
 

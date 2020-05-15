@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 import { withRouter } from "react-router-dom";
 
+import { connect } from 'react-redux'
+
+import { successLogin, failLogin } from '../../store/actions/login'
+
 // import post 请求方法
 import { login } from "../../requests/login";
 // 样式
@@ -11,6 +15,8 @@ import { Form, Input, Button, Layout } from "antd";
 const { Content } = Layout;
 
 function Login(props) {
+  console.log(props);
+  
   const [form] = Form.useForm();
   const [layout] = useState({
     labelCol: {
@@ -37,10 +43,13 @@ function Login(props) {
     };
     login(data).then((res) => {
       if (res.status === 200) {
+        // props.successLogin()
         props.history.push({
           pathname: res.url,
         });
+        return
       } else {
+        // props.failLogin()
         props.history.push({
           pathname: res.url,
         });
@@ -134,4 +143,10 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => {
+  return {
+    login: state.isLogin
+  }
+}
+
+export default connect(mapStateToProps,{ successLogin, failLogin })(withRouter(Login))
