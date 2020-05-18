@@ -1,17 +1,58 @@
-import { request } from './index'
+import { request } from "./index";
 
 // 发表
 export function publish(data) {
   return request({
-    url: '/admin/publish',
+    url: "/admin/publish",
+    method: "post",
+    data,
+  });
+}
+
+// 查询所有博客信息
+export function getBlogInfo() {
+  return request({
+    url: "/admin/getBlogInfo"
+  });
+}
+
+// 修改置顶状态
+export function editTopShowTop(id) {
+  return request({
+    url: '/admin/editToShowTop',
+    method: "post",
+    data: {
+      id
+    }
+  })
+}
+
+// 根据 id 获得对应数据用于博客编辑功能
+export function getBlogInfoById(id) {
+  return request({
+    url: '/admin/getBlogInfoById',
+    params: {
+      id
+    }
+  })
+}
+
+// 编辑博客
+export function editorBlogInfo(data) {
+  return request({
+    url: '/admin/editorBlogInfo',
     method: 'post',
     data
   })
 }
 
-// 查询所有博客信息 
-export function getBlogInfo() {
+// 删除博客
+export function deleteBlogInfo(id) {
   return request({
-    url: '/admin/getBlogInfo'
+    url: '/admin/deleteBlogInfo',
+    method: 'post',
+    data: {
+      id
+    }
   })
 }

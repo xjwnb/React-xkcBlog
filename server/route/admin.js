@@ -92,6 +92,95 @@ admin.get("/getBlogInfo", async (req, res) => {
     });
     return;
   }
+  res.send({
+    status: 404,
+    msg: '请先登录'
+  })
+  console.log({
+    status: 404,
+    msg: '请先登录'
+  })
+  return
 });
+
+// 修改置顶
+admin.post("/editToShowTop", async (req, res) => {
+
+  let id = req.body.id
+  // 获取更新前对应 ID 的数据
+  let blogInfo = await BlogInfo.findOne({_id: id})
+  console.log(id, blogInfo)
+  // 更新数据
+  await BlogInfo.findOneAndUpdate({_id: id}, {
+    isShowTop: !blogInfo.isShowTop
+  })
+  // 获取更新后的对应 ID 的数据
+  let data = await BlogInfo.findOne({_id: id})
+  console.log(data)
+  res.send({
+    status: 200,
+    data,
+    msg: '更新成功'
+  })
+})
+
+
+// 根据 id 获得对应博客数据用于编辑博客
+admin.get('/getBlogInfoById', async (req, res) => {
+  console.log('根据id 获得数据',req.query.id)
+  let id = req.query.id
+  let data = await BlogInfo.findOne({_id: id})
+  console.log(data)
+  // 如果可以获取到数据
+  if (data._id) {
+    res.send({
+      status: 200,
+      data,
+      msg: '成功获取数据'
+    })
+    return
+  } else {
+    res.send({
+      status: 404,
+      msg: '提交数据错误'
+    })
+  }
+})
+
+// 编辑博客
+admin.post('/editorBlogInfo', async (req, res) => {
+  let id = req.body._id
+  let { _id, title, author, time, content } = req.body
+  await  BlogInfo.findByIdAndUpdate({_id}, {
+    title,
+    author,
+    time,
+    content
+  })
+  res.send({
+    status: 200,
+    msg: '编辑成功'
+  })
+})
+
+// 删除博客
+admin.post('/deleteBlogInfo', async (req, res) => {
+  console.log(req.body.id)
+  let id = req.body.id
+  await BlogInfo.deleteOne({_id: id})
+  let nowBlogInfo = await BlogInfo.findOne({_id: id})
+  console.log(nowBlogInfo)
+  if (!nowBlogInfo) {
+    res.send({
+      status: 200,
+      msg: '删除成功'
+    })
+    return
+  }
+  res.send({
+    status: 404,
+    msg: '删除失败'
+  })
+})
 
 module.exports = admin;

@@ -2,7 +2,7 @@
 import Dashboard from '../views/Dashboard'
 import Article from '../views/Article'
 import writeBlog from '../views/WriteBlog'
-// import ArticleEdit from '../views/ArticleEdit'
+import ArticleEdit from '../views/ArticleEdit'
 
 
 export const adminRouter = [
@@ -26,16 +26,11 @@ export const adminRouter = [
     component: writeBlog,
     title: '写博客',
     exact: true
-  }
-    
-    
-    /* ,
+  },
   {
-    id: 2,
+    id: 3,
     pathName: '/admin/article/edit/:id',
     component: ArticleEdit,
-    title: '文章编辑',
-    icon: 'EditOutlined',
     exact: true
-  } */
+  } 
 ]
