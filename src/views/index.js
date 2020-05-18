@@ -1,3 +1,4 @@
+import Index from './Index/index'
 import Admin from "./Admin/index.jsx";
 import Article from "./Article/index.jsx";
 import Blog from "./Blog/index.jsx";
@@ -8,8 +9,8 @@ import NotFound from "./NotFound/index.jsx";
 import ArticleEdit from "./ArticleEdit/index.jsx";
 import WriteBlog from "./WriteBlog/index.jsx";
 
-
 export { 
+  Index,
   Admin, 
   Article, 
   Blog, 

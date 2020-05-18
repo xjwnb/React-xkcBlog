@@ -88,7 +88,7 @@ function Login(props) {
         className="login-form"
       >
         <Content>
-          <h1 className="font">登录</h1>
+          <h1 className="font">管理员登录</h1>
           <Form.Item
             label="用户名"
             name="username"

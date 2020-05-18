@@ -1,14 +1,14 @@
 import React from "react";
 
-
-import { Button } from "antd";
+// antd
+// import { Button } from "antd";
+// 组件
+import { Index } from './views'
 
 function App() {
   return (
     <div className="App">
-      App
-      <Button type="primary">Antd按钮</Button>
-      
+      <Index />
     </div>
   );
 }
