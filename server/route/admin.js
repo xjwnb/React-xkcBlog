@@ -10,9 +10,11 @@ const { BlogInfo } = require("../model/admin");
 // get
 admin.get("/user", (req, res) => {
   console.log(req.session);
-  res.send({
-    msg: req.session,
-  });
+  if (req.session.username !== null) {
+    res.send({
+      msg: req.session,
+    });
+  }
 });
 
 // post请求 /login

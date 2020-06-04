@@ -1,56 +1,15 @@
-// 变量
-@heeaderHeight: "64px";
-@footerHeight: "70px";
-
-.index {
-  .layout {
-    height: 100vh;
-    .header {
-      background-color: #0f4163;
-      .logo {
-        span {
-          font-size: 20px;
-        }
-      }
-      .nav {
-        ul {
-          float: right;
-          li {
-            float: left;
-            list-style: none;
-            padding: 0 30px 0;
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            &:hover {
-              color: rgb(248, 248, 248);
-              background-repeat: no-repeat;
-              background-color: #1296db;
-            }
-            svg {
-              width: 30px;
-              margin-right: 10px;
-              height: auto;
-              display: inline-block;
-              vertical-align: middle;
-            }
-          }
-        }
-      }
-    }
+.indexContent {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  .index-font {
+    width: 45%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    text-align: center;
+    border: 1px solid #eeeeee;
   }
-  .content {
-    background-color: #eeeeee;
-    position: relative;
-    top: @heeaderHeight;
-    bottom: @footerHeight;
-    background-image: url("../../assets/images//previewFix.jpg");
-  }
-  .footer {
-    background-color: #000000;
-  }
-}
-
-::selection {
-  background-color: #40cfc3;
 }

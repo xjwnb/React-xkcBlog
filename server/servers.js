@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: "5mb" }));
 // app.use(cors());
 
 app.use("*", (req, res, next) => {
-  next()
+  next();
   /* console.log(req.params[0]);
   let url = req.params[0];
   if (url === "/admin/login") {
@@ -60,8 +60,10 @@ app.use(
 );
 
 const admin = require("./route/admin");
+const blog = require("./route/blog");
 
 app.use("/admin", admin);
+app.use("/blog", blog);
 // require('./model/user')    只插入一个管理员用户即可
 // require('./model/admin')    发表第一篇博客张完毕
 

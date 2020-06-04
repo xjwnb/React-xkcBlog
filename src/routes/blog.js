@@ -13,7 +13,7 @@ export const blogRouter = [
     exact: true
   },
   {
-    pathName: '/blog/blogList',
+    pathName: '/blog/blogList/:id',
     component: BlogList
   }
 ]

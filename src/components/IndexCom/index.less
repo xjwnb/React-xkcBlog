@@ -1,0 +1,63 @@
+// 变量
+@heeaderHeight: "64px";
+@footerHeight: "70px";
+
+.index {
+  .layout {
+    height: 100vh;
+    .header {
+      background-color: #0f4163;
+      .logo {
+        span {
+          font-size: 20px;
+        }
+      }
+      .nav {
+        ul {
+          float: right;
+          li {
+            float: left;
+            list-style: none;
+            padding: 0 30px 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            &:hover {
+              color: rgb(248, 248, 248);
+              background-repeat: no-repeat;
+              background-color: #1296db;
+            }
+            .github {
+              display: inline-block;
+              svg {
+                width: 30px;
+                margin-right: 10px;
+                height: auto;
+                display: inline-block;
+                vertical-align: middle;
+              }
+            }
+            
+          }
+        }
+      }
+    }
+  }
+  .content {
+    background-color: #eeeeee;
+    height: 100%;
+    position: relative;
+    top: @heeaderHeight;
+    bottom: @footerHeight;
+    background-image: url("../../assets/images//previewFix.jpg");
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .footer {
+    background-color: #000000;
+  }
+}
+
+::selection {
+  background-color: #40cfc3;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { withRouter } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { successLogin, failLogin } from '../../store/actions/login'
 
 // import post 请求方法
-import { login } from "../../requests/login";
+import { login, user } from "../../requests/login";
 // 样式
 import "./index.less";
 
@@ -33,6 +33,24 @@ function Login(props) {
       span: 16,
     },
   });
+
+  useEffect(() => {
+    // 判断是否已经登录（登录的cookie未过期）
+    console.log('lll')
+    console.log(user)
+    user().then(res => {
+      console.log(res)
+      if (res.msg.cookie.username === null) {
+        return 
+      }
+      props.history.push({
+        pathname: '/admin'
+      })
+    })
+    return () => {
+      
+    }
+  }, [props.history])
 
   // 成功登录按钮事件
   const onFinish = (values) => {

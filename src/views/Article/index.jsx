@@ -199,7 +199,7 @@ function Article(props) {
   };
 
   // Model 确定按钮
-  const handleOk = () => {
+  function handleOk () {
     let id = deleteID;
     setconfirmLoading(true);
     deleteBlogInfo(id).then((res) => {
@@ -208,7 +208,7 @@ function Article(props) {
         setconfirmLoading(false);
         message.success("删除成功！");
         setvisible(false);
-        let deleteID = data.findIndex((item, index) => {
+        let deleteID = data.findIndex((item) => {
           if (item.key === id) {
             return true;
           }
