@@ -40,9 +40,11 @@ function Login(props) {
     console.log(user)
     user().then(res => {
       console.log(res)
-      if (res.msg.cookie.username === null) {
+      if (res.msg.cookie.username === undefined) {
+        console.log(res.msg.cookie.username)
         return 
       }
+      console.log(res.msg.cookie.username)
       props.history.push({
         pathname: '/admin'
       })
