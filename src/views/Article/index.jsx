@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 
 import { withRouter } from "react-router-dom";
@@ -40,7 +41,7 @@ function Article(props) {
 
     console.log(props);
     if (!props.login.isLogin) {
-      message.warning("请重新登录！");
+      // message.warning("请重新登录！");
       timer = setTimeout(() => {
         props.history.push("/login");
       }, 3000);

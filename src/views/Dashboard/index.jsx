@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { withRouter } from 'react-router-dom'
 
-import { message } from 'antd'
+// import { message } from 'antd'
 
 import { connect } from 'react-redux'
 
@@ -12,7 +12,7 @@ function Dashboard(props) {
     console.log(props.login)
     let timer = null
     if (!props.login.isLogin) {
-      message.warning('请重新登录！')
+      // message.warning('请重新登录！')
       timer = setTimeout(() => {
         props.history.push('/login')
       }, 3000)
