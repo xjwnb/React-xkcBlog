@@ -43,7 +43,7 @@ componentDidMount() {
     return (
       <div className="conten">
         <h1 className="title">{ state.blogContent.title }</h1>
-        <h1 className="author">{ state.blogContent.author }</h1>
+        <h3 className="author">{ state.blogContent.author }</h3>
         <h3 className="blogtime">{ state.blogContent.time }</h3>
         {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
         <div className="blogContent">

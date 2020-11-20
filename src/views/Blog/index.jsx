@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from "react";
 // 自定义组件
 import { IndexHOC, BlogList, Author, CarouselAntd } from "../../components";
@@ -45,12 +46,29 @@ class Blog extends Component {
     // 获取博客数据
     getBlogInfo().then((res) => {
       if (res.status === 200) {
+        // 获得置顶博客的新数组
+        let screenBlogData = this.screenSetBlogData(res.data);
         this.setState({
-          blogInfo: res.data,
+          blogInfo: screenBlogData,
         });
-        console.log(this.state.blogInfo);
       }
     });
+  }
+
+  // 筛选出置顶博客，并放置在数组前面
+  screenSetBlogData(blogData) {
+    let topBlogData = [],
+        anthorBlogData = [];
+    blogData.map(blog => {
+      if (blog.isShowTop) {
+        topBlogData.push(blog);
+      } else {
+        anthorBlogData.push(blog);
+      }
+    });
+    return [...topBlogData, ...anthorBlogData];
+    // console.log("topBlogData", topBlogData);
+    // console.log("anthorBlogData", anthorBlogData);
   }
 
   render() {
