@@ -2,6 +2,9 @@
 @heeaderHeight: "64px";
 @footerHeight: "70px";
 
+.ant-layout {
+  background-color: #ffffff !important;
+}
 .index {
   .layout {
     height: 100vh;
@@ -44,14 +47,15 @@
     }
   }
   .content {
-    background-color: #eeeeee;
-    height: 100%;
-    position: relative;
+    // background-color: #eeeeee;
+    // height: 100%;
+    // position: relative;
     top: @heeaderHeight;
     bottom: @footerHeight;
-    background-image: url("../../assets/images//previewFix.jpg");
+    // background-image: url("../../assets/images//previewFix.jpg");
     overflow: scroll;
     overflow-x: hidden;
+    /* overflow-y: hidden; */
   }
   .footer {
     background-color: #000000;

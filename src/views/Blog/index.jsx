@@ -16,7 +16,7 @@ class Blog extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    // 获取博客数据
     getBlogInfo().then((res) => {
       if (res.status === 200) {
         this.setState({
