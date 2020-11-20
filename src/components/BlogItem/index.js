@@ -1,9 +1,12 @@
+
 import React, { useEffect } from "react";
 
 // 样式
 import "./index.less";
 //
 import { withRouter, Link } from "react-router-dom";
+// antd
+import { Image } from 'antd';
 
 function BlogItem(props) {
   console.log(props);
@@ -13,24 +16,25 @@ function BlogItem(props) {
     return () => {};
   }, []);
   return (
-    <ul>
+    <div className="blog">
       <Link to={`/blog/blogList/${_id}`}>
         <div className="blog-item">
-          <li>
+          <div className="blog-left">
+            <Image
+              width={100}
+              src={require("../../assets/images/author.png")}
+            />
+          </div>
+          <div className="blog-right">
             <div className="title">标题：{title}</div>
-          </li>
-          <li>
             <div className="author">作者：{author}</div>
-          </li>
-          <li>
             <div className="time">时间：{time}</div>
-          </li>
-
+          </div>
           {/* <span>内容：</span> */}
           {/* <div className="cont" dangerouslySetInnerHTML={{__html: content}} /> */}
         </div>
       </Link>
-    </ul>
+    </div>
   );
 }
 

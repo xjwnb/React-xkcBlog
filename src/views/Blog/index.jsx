@@ -33,7 +33,7 @@ class Blog extends Component {
       <div className="BlogContent">
         <BlogList {...props.blogInfo} />
 
-        <Author />
+        <Author className="author" />
       </div>
     );
   }
