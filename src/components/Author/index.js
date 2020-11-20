@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 21:29:03
- * @LastEditTime: 2020-11-20 14:17:31
- * @LastEditors: your name
+ * @LastEditTime: 2020-11-20 17:28:11
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\Author\index.js
  */
-
+/* eslint-disable */
 import React, { useState } from 'react'
 // 样式
 import './index.less'

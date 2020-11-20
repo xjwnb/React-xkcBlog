@@ -1,8 +1,9 @@
+
 import React from 'react'
 
 import './index.less'
 
-import { Alert } from 'antd'
+import { Alert } from 'antd';
 
 
 export default function AlertCom(props) {
