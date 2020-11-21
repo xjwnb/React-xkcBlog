@@ -34,6 +34,11 @@ function Article(props) {
   const [deleteTitle, setdeleteTitle] = useState("");
   const [confirmLoading, setconfirmLoading] = useState(false);
   const [deleteID, setdeleteID] = useState("");
+  // 分页
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10
+  })
 
   useEffect(() => {
     let allData;
@@ -231,7 +236,7 @@ function Article(props) {
       <Box>
         {data ? (
           <div>
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data} pagination={pagination} />
           </div>
         ) : (
           <Spin tip="Loading...">
