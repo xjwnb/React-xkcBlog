@@ -36,21 +36,22 @@ function Login(props) {
 
   useEffect(() => {
     // 判断是否已经登录（登录的cookie未过期）
-    console.log('lll')
-    console.log(user)
+    let timer = null;
+    // 判断是否已经登录请求
     user().then(res => {
-      console.log(res)
-      if (res.msg.cookie.username === undefined) {
-        console.log(res.msg.cookie.username)
+      // 如果没有登录
+      if (res.msg.username === undefined) {
         return 
       }
-      console.log(res.msg.cookie.username)
-      props.history.push({
-        pathname: '/admin'
-      })
+      // 已经登录，则跳转页面
+      timer = setTimeout(() => {
+        props.history.push({
+          pathname: '/admin'
+        });
+      }, 1000);
     })
     return () => {
-      
+      clearTimeout(timer);
     }
   }, [props.history])
 
@@ -63,6 +64,7 @@ function Login(props) {
     };
     login(data).then((res) => {
       if (res.status === 200) {
+        console.log(res)
         // props.successLogin()
         props.history.push({
           pathname: res.url,

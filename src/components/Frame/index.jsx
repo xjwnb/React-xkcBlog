@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { withRouter } from 'react-router-dom'
 
 import "./index.less";
 
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button } from "antd";
+
+// 请求
+import { loginOut } from '../../requests/admin'
 
 import {
   UserOutlined,
@@ -23,10 +26,36 @@ function Frame(props) {
   const handleMenu = ({keyPath}) => {
     props.history.push(keyPath[0])
   }
+  useEffect(() => {
+    let timer = null;
+    if (!props.username) {
+      timer = setTimeout(() => {
+        props.history.push("/login");
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [props])
+
+
+  // 登录注销
+  const loginOutHandler = () => {
+    loginOut().then(res => {
+      console.log("loginOut", res);
+      if (res.status === 200) {
+        props.history.push("/login");
+      }
+    })
+  }
+
   return (
     <Layout>
       <Header className="header">
         <div className="logo">{props.username}</div>
+        <div className="header-right">
+          <Button onClick={loginOutHandler}>注销</Button>
+        </div>
       </Header>
       <Layout className="content">
         <Sider width={200} className="site-layout-background">

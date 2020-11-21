@@ -55,8 +55,9 @@ app.use(
   session({
     secret: "session xkc",
     saveUninitialized: true,
-    resave: true,
+    resave: false,
     cookie: { maxAge: 3600 * 1000 * 6 },
+    rolling:true
   })
 );
 

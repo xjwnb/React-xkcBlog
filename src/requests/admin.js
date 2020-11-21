@@ -1,3 +1,4 @@
+
 import { request } from "./index";
 
 // 发表
@@ -54,5 +55,12 @@ export function deleteBlogInfo(id) {
     data: {
       id
     }
+  })
+}
+
+export function loginOut() {
+  return request({
+    url: "/admin/loginOut",
+    method: "get"
   })
 }
