@@ -77,6 +77,7 @@ function ArticleEdit(props) {
 
   // 时间选择器选择事件
   const onTimeChange = (value, dateString) => {
+    console.log(value, dateString);
     setTime({
       time: dateString,
     });
@@ -84,11 +85,13 @@ function ArticleEdit(props) {
 
   // 确定修改按钮事件
   const onFinish = (values) => {
+    console.log(values.time._d);
     console.log(defaultValue)
     editAllData = {
       _id: defaultValue._id,
       ...values,
-      time: getData.time,
+      // time: getData.time,
+      time,
       isShowTop: defaultValue.isShowTop,
       content: editorState.editorState,
     };

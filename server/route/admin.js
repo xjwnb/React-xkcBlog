@@ -155,7 +155,9 @@ admin.get("/getBlogInfoById", async (req, res) => {
 // 编辑博客
 admin.post("/editorBlogInfo", async (req, res) => {
   let id = req.body._id;
-  let { _id, title, author, time, content } = req.body;
+  let { _id, title, author, content } = req.body;
+  console.log(req.body);
+  let time = req.body.time.time;
   await BlogInfo.findByIdAndUpdate(
     { _id },
     {

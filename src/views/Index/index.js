@@ -1,18 +1,11 @@
-/*
- * @Author: your name
- * @Date: 2020-05-18 16:13:25
- * @LastEditTime: 2020-11-20 19:32:59
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \react-blog\src\views\Index\index.js
- */
+
 import React, { Component } from "react";
 
 // 样式
 import "./index.less";
 
 // 自定义组件
-import { IndexHOC } from '../../components'
+import { IndexHOC } from '@/components'
 
 
 @IndexHOC
