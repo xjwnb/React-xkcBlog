@@ -54,7 +54,7 @@ function Article(props) {
 
     // 编辑按钮
     const editBlog = (id) => {
-      props.history.push(`/admin/article/edit/${id}`);
+      props.history.push(`/admin/edit/${id}`);
     };
 
     // 删除按钮
@@ -72,7 +72,7 @@ function Article(props) {
 
       /*  deleteBlogInfo(id).then(res => {
         console.log(res)
-      }) */
+      }) */ 
     };
 
     // 修改 isShouTop 状态

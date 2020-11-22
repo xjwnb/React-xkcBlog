@@ -5,7 +5,8 @@ import { ContentUtils } from "braft-utils";
 import "braft-editor/dist/index.css";
 
 // antd 组件
-import { Form, Input, Button, DatePicker, message } from "antd";
+import { Form, Input, Button, DatePicker, message, Upload, Modal } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 // axios 方法
 import { publish } from "../../requests/admin";
@@ -29,6 +30,11 @@ class WriteMyBlog extends Component {
       time: "",
       isLoading: false,
       second: 3,
+      previewVisible: false,
+      previewImage: "",
+      previewTitle: "",
+      fileList: [],
+      descriptPicture: "",
     };
   }
   // 发表事件
@@ -38,12 +44,16 @@ class WriteMyBlog extends Component {
     });
     values.time = this.state.time;
     values.content = this.state.editorState;
+    values.descriptPicture = this.state.descriptPicture;
+    values.visits = 0;
+    console.log("onFinish", values);
+    
 
     publish(values).then((res) => {
       console.log(res);
       if (res.status === 200) {
         this.setState({
-          isLoading: false
+          isLoading: false,
         });
         values = null;
         message.success("发表成功！");
@@ -60,7 +70,7 @@ class WriteMyBlog extends Component {
               setTimeout(() => {
                 this.props.history.push(res.url);
               }, 2000);
-              clearInterval(timer)
+              clearInterval(timer);
               return;
             }
           }, 3000);
@@ -74,6 +84,7 @@ class WriteMyBlog extends Component {
   // 发表失败事件
   onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    message.error("请按要求输入信息");
   };
 
   // 时间选择器选择事件
@@ -88,13 +99,16 @@ class WriteMyBlog extends Component {
   };
 
   // BraftEditor 富文本编辑器修改触发
-  handleChange = (editorState) => {
+  braftEditorHandleChange = (editorState) => {
     this.setState({
       editorState: editorState.toHTML(),
+    },() => {
+      console.log(this.state.editorState);
     });
   };
 
   uploadHandler = (param) => {
+    console.log(param)
     if (!param.file) {
       return false;
     }
@@ -106,10 +120,56 @@ class WriteMyBlog extends Component {
           url: URL.createObjectURL,
         },
       ]),
+    },() => {
+      console.log(this.state.editorState)
     });
   };
 
+  // 描述图片
+  handleCancel = () => this.setState({ previewVisible: false });
+
+  handlePreview = async (file) => {
+    /* if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    } */
+
+    this.setState({
+      previewImage: file.thumbUrl,
+      previewVisible: true,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    });
+  };
+
+  handleChange = (data) => {
+    return this.setState({ fileList: data.fileList });
+  };
+
+  componentDidUpdate() {
+    if (!this.state.descriptPicture) {
+      let element = document.querySelector(".ant-upload-list-item-info span");
+      if (element !== null) {
+        let a = element.childNodes[0];
+        if (a.nodeName === "A") {
+          let imageUrl = a.getAttribute("href");
+          if (imageUrl) {
+            this.setState({
+              descriptPicture: imageUrl,
+            });
+          }
+        }
+      }
+    }
+  }
+
   render() {
+    const { previewVisible, previewImage, fileList, previewTitle } = this.state;
+    const uploadButton = (
+      <div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
     return (
       <Fragment>
         {/* 表单 */}
@@ -127,6 +187,41 @@ class WriteMyBlog extends Component {
             rules={[{ required: true, message: "请输入你的标题!" }]}
           >
             <Input />
+          </Form.Item>
+
+          {/* 描述图片 */}
+          <Form.Item 
+            label="描述图片" 
+            name="descriptPicture"
+            rules={[{ required: true, message: "请传入图片!" }]}>
+            <div className="uploadPicture">
+              <Upload
+                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture-card"
+                fileList={fileList}
+                beforeUpload={(file, fileList) => {
+                  console.log(file, fileList);
+                  return false;
+                }}
+                onPreview={this.handlePreview}
+                onChange={this.handleChange}
+              >
+                {/* {fileList.length >= 8 ? null : uploadButton} */}
+                {uploadButton}
+              </Upload>
+              <Modal
+                visible={previewVisible}
+                title={previewTitle}
+                footer={null}
+                onCancel={this.handleCancel}
+              >
+                <img
+                  alt="example"
+                  style={{ width: "100%" }}
+                  src={previewImage}
+                />
+              </Modal>
+            </div>
           </Form.Item>
 
           {/* 作者 */}
@@ -159,7 +254,7 @@ class WriteMyBlog extends Component {
           >
             <BraftEditor
               value={this.state.editorState}
-              onChange={this.handleChange}
+              onChange={this.braftEditorHandleChange}
             />
           </Form.Item>
 

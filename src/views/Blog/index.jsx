@@ -7,6 +7,8 @@ import "./index.less";
 // 请求方法
 import { getBlogInfo } from "../../requests/blog";
 
+import { Image } from 'antd'
+
 @IndexHOC
 class Blog extends Component {
   constructor() {

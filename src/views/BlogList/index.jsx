@@ -33,6 +33,9 @@ componentDidMount() {
         blogContent,
         __html: blogContent.content
       })
+      return ;
+    } else {
+      props.history.push("/NotFound");
     }
   })
 }

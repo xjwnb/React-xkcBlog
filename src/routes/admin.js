@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-11 16:27:09
+ * @LastEditTime: 2020-11-22 16:48:20
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react-blog\src\routes\admin.js
+ */
 
 import Dashboard from '../views/Dashboard'
 import Article from '../views/Article'
@@ -29,7 +37,7 @@ export const adminRouter = [
   },
   {
     id: 3,
-    pathName: '/admin/article/edit/:id',
+    pathName: '/admin/edit/:id',
     component: ArticleEdit,
     exact: true
   } 

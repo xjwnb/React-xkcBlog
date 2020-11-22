@@ -27,6 +27,7 @@ function Frame(props) {
     props.history.push(keyPath[0])
   }
   useEffect(() => {
+    console.log("Frame：props" ,props);
     let timer = null;
     if (!props.username) {
       timer = setTimeout(() => {
@@ -68,7 +69,7 @@ function Frame(props) {
           >
             <SubMenu key="sub1" icon={<UserOutlined />} title={props.username}>
               {
-                props.menus.map(menu => {
+                props.menus.slice(0, props.menus.length - 1).map(menu => {
                   return (
                     <Menu.Item key={menu.pathName} >{icons[menu.id]} {menu.title}</Menu.Item>
                   )
