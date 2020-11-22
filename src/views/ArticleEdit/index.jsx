@@ -69,7 +69,7 @@ function ArticleEdit(props) {
   }, [props, form]);
 
   // 富文本编辑器修改时
-  const handleChange = (editor) => {
+  const braftEditorHandleChange = (editor) => {
     seteditorState({
       editorState: editor.toHTML(),
     });
@@ -181,7 +181,7 @@ function ArticleEdit(props) {
               name="content"
               rules={[{ required: true, message: "请输入内容!" }]}
             >
-              <BraftEditor value={editorState} onChange={handleChange} />
+              <BraftEditor value={editorState} onChange={braftEditorHandleChange} />
             </Form.Item>
 
             {/* 发表按钮 */}
