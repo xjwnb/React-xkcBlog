@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 
 import { withRouter } from "react-router-dom";
@@ -12,6 +11,7 @@ import {
   Spin,
   Alert,
   Modal,
+  Image,
 } from "antd";
 
 import { connect } from "react-redux";
@@ -36,9 +36,9 @@ function Article(props) {
   const [deleteID, setdeleteID] = useState("");
   // 分页
   const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10
-  })
+    // current: 1,
+    pageSize: 10,
+  });
 
   useEffect(() => {
     let allData;
@@ -72,7 +72,7 @@ function Article(props) {
 
       /*  deleteBlogInfo(id).then(res => {
         console.log(res)
-      }) */ 
+      }) */
     };
 
     // 修改 isShouTop 状态
@@ -108,6 +108,7 @@ function Article(props) {
           });
           newColumns.push("edit");
           newColumns.unshift("id");
+          console.log(blog.data);
 
           // data 数据
           allData = blog.data.map((item, index) => {
@@ -116,14 +117,17 @@ function Article(props) {
               key: item._id,
               title: item.title,
               author: item.author,
+              descriptionPicture: item.descriptionPicture,
               time: item.time,
               isShowTop: item.isShowTop,
+              visits: item.visits,
             };
           });
           setdata(allData);
 
           // columns 数据
           let newData = newColumns.map((item, index) => {
+            // 置顶
             if (item === "isShowTop") {
               return {
                 title: item,
@@ -141,6 +145,22 @@ function Article(props) {
                   );
                 },
               };
+
+              // 描述图片
+            } else if (item === "descriptionPicture") {
+              return {
+                title: item,
+                key: item,
+                dataIndex: item,
+                render: (text, record) => {
+                  return (
+                    <div className="descriptionPicture">
+                      <Image src={text}/>
+                    </div>
+                  );
+                },
+              };
+              // 编辑
             } else if (item === "edit") {
               return {
                 title: item,
@@ -186,7 +206,7 @@ function Article(props) {
           });
           setcolumns(newData);
         } else {
-          message.error(res.msg)
+          message.error(res.msg);
         }
       });
     };
@@ -197,7 +217,14 @@ function Article(props) {
       clearTimeout(timer);
       // setdata(undefined)
     };
-  }, [props.history, props.login.isLogin, props, confirmLoading, deleteTitle, visible]);
+  }, [
+    props.history,
+    props.login.isLogin,
+    props,
+    confirmLoading,
+    deleteTitle,
+    visible,
+  ]);
 
   // Model 取消按钮
   const handleCancel = () => {
@@ -205,7 +232,7 @@ function Article(props) {
   };
 
   // Model 确定按钮
-  function handleOk () {
+  function handleOk() {
     let id = deleteID;
     setconfirmLoading(true);
     deleteBlogInfo(id).then((res) => {
@@ -229,14 +256,18 @@ function Article(props) {
       setvisible(false);
       return;
     });
-  };
+  }
 
   return (
     <div>
       <Box>
         {data ? (
           <div>
-            <Table columns={columns} dataSource={data} pagination={pagination} />
+            <Table
+              columns={columns}
+              dataSource={data}
+              pagination={pagination}
+            />
           </div>
         ) : (
           <Spin tip="Loading...">

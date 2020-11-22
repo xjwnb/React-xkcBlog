@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 21:29:03
- * @LastEditTime: 2020-11-20 17:28:11
+ * @LastEditTime: 2020-11-23 00:02:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\Author\index.js
@@ -10,6 +10,8 @@
 import React, { useState } from 'react'
 // 样式
 import './index.less'
+
+import { Image } from 'antd';
 
 export default function Author() {
   const [msg, setMsg] = useState({
@@ -21,7 +23,7 @@ export default function Author() {
   return (
     <div className="auth">
       <div className="avatar">
-        <img src={msg.authorImg} alt="头像"></img>
+        <Image src={msg.authorImg} alt="头像" />
       </div>
       <div className="msg">
         <h3>昵称：{ msg.name }</h3>

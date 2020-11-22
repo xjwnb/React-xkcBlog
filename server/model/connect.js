@@ -1,5 +1,6 @@
+
 let mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/blog', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/blog', { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true })
   .then(res => {
     console.log('数据库连接成功')
   })

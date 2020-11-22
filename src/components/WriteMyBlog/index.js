@@ -102,8 +102,6 @@ class WriteMyBlog extends Component {
   braftEditorHandleChange = (editorState) => {
     this.setState({
       editorState: editorState.toHTML(),
-    },() => {
-      console.log(this.state.editorState);
     });
   };
 

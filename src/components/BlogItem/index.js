@@ -10,7 +10,7 @@ import { Image } from 'antd';
 
 function BlogItem(props) {
   console.log(props);
-  const { title, author, time, _id } = props;
+  const { title, author, time, _id, descriptionPicture } = props;
 
   useEffect(() => {
     return () => {};
@@ -21,8 +21,7 @@ function BlogItem(props) {
         <div className="blog-item">
           <div className="blog-left">
             <Image
-              width={100}
-              src={require("../../assets/images/author.png")}
+              src={descriptionPicture ? descriptionPicture : require("../../assets/images/author.png")}
             />
           </div>
           <div className="blog-right">

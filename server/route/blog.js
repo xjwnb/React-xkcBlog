@@ -37,6 +37,13 @@ blog.get('/getBlogInfoById', async (req, res) => {
         blogInfo
       }
     })
+    
+    await BlogInfo.findByIdAndUpdate(
+      { _id: id },
+      {
+        visits: blogInfo.visits + 1
+      }
+    )
     return ;
   }
   res.send({
