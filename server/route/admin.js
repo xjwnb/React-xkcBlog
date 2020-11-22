@@ -52,20 +52,20 @@ admin.post("/login", async (req, res) => {
 
 // 发表
 admin.post("/publish", (req, res) => {
-  console.log(req.body);
-  let { title, author, time, content } = req.body;
+  let { title, author, time, content, descriptPicture, visits } = req.body;
   if (
     title.length > 0 &&
     author.length > 0 &&
-    time.length > 0 &&
-    content.length > 7
+    time.length > 0 
   ) {
     console.log("成功");
     BlogInfo.create({
       title,
       author,
+      descriptionPicture: descriptPicture,
       time,
       isShowTop: false,
+      visits,
       content,
     }).then((response) => {
       console.log("插入博客成功");
@@ -88,11 +88,12 @@ admin.get("/getBlogInfo", async (req, res) => {
   console.log(req.session);
   if (req.session.username) {
     let blogInfo = await BlogInfo.find();
+    let newBlogInfo = blogInfo.reverse();
     // console.log(blogInfo)
     res.send({
       status: 200,
       msg: "成功获取所有博客数据",
-      data: blogInfo,
+      data: newBlogInfo,
     });
     return;
   }
