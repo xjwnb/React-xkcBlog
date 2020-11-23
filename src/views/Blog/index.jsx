@@ -7,7 +7,7 @@ import "./index.less";
 // 请求方法
 import { getBlogInfo } from "../../requests/blog";
 
-import { Image } from 'antd'
+import { Image } from "antd";
 
 @IndexHOC
 class Blog extends Component {
@@ -18,29 +18,29 @@ class Blog extends Component {
       carouselImages: [
         {
           id: 1,
-          src: require("../../assets/images/carousel/carousel1.jpg")
+          src: require("../../assets/images/carousel/carousel1.jpg"),
         },
         {
           id: 2,
-          src: require("../../assets/images/carousel/carousel2.jpg")
+          src: require("../../assets/images/carousel/carousel2.jpg"),
         },
         {
           id: 3,
-          src: require("../../assets/images/carousel/carousel3.jpg")
+          src: require("../../assets/images/carousel/carousel3.jpg"),
         },
         {
           id: 4,
-          src: require("../../assets/images/carousel/carousel4.jpg")
+          src: require("../../assets/images/carousel/carousel4.jpg"),
         },
         {
           id: 5,
-          src: require("../../assets/images/carousel/carousel5.jpg")
+          src: require("../../assets/images/carousel/carousel5.jpg"),
         },
         {
           id: 6,
-          src: require("../../assets/images/carousel/carousel6.jpg")
+          src: require("../../assets/images/carousel/carousel6.jpg"),
         },
-      ]
+      ],
     };
   }
 
@@ -55,13 +55,16 @@ class Blog extends Component {
         });
       }
     });
+    console.log(document.body.scrollHeight);
+
+
   }
 
   // 筛选出置顶博客，并放置在数组前面
   screenSetBlogData(blogData) {
     let topBlogData = [],
-        anthorBlogData = [];
-    blogData.map(blog => {
+      anthorBlogData = [];
+    blogData.map((blog) => {
       if (blog.isShowTop) {
         topBlogData.push(blog);
       } else {

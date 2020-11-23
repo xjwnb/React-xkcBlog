@@ -131,9 +131,7 @@ function ArticleEdit(props) {
     let element = document.getElementsByClassName(
       "ant-upload-list-picture-card-container"
     );
-    console.log(element);
     let lastEle = element[element.length - 1];
-    console.log(lastEle);
     if (lastEle) {
       let href = lastEle
         .getElementsByClassName("ant-upload-list-item-thumbnail")[0]
@@ -188,8 +186,7 @@ function ArticleEdit(props) {
 
   // 点击描述图片的眼睛 icon
   const handlePreview = async (file) => {
-    console.log(file);
-    setPreviewImage(file.url);
+    setPreviewImage(file.url || file.thumbUrl);
     setPreviewVisible(true);
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)

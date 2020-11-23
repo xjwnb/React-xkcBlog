@@ -2,11 +2,11 @@
   // width: 30%;
   // min-width: 400px;
   width: 100%;
-  padding: 20px  20px;
+  padding: 20px 20px;
   border: 1px solid #eee;
   box-shadow: 10px 10px 20px #1296db 5px;
   background-color: rgb(255, 255, 255);
-  opacity: .8;
+  opacity: 0.8;
   color: #000000;
   display: flex;
   .cont {
@@ -17,7 +17,7 @@
   }
   .blog-left {
     // padding-right: 20px;
-    width: 200px;
+    width: 300px;
     height: 150px;
     overflow: hidden;
   }
@@ -26,12 +26,21 @@
   }
 }
 
+/* .blog-left .ant-image {
+  width: 300px;
+  height: 150px;
+} */
+
 .blog-left .ant-image-img {
-  width: 200px;
-  height: 200px;
+  min-width: 300px;
+  min-height: auto;
+  transform: translateY(-20%);
+  top: 100px;
   transition: all 1s;
 }
-
+img {
+  background-size: cover;
+}
 
 .blog:hover .ant-image-img {
   transform: scale(2);
@@ -46,4 +55,30 @@
 
 .blog {
   margin-bottom: 1rem;
+}
+
+.iconfont {
+  margin-right: 5px;
+}
+
+.title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-family: KaiTi, NSimSun;
+  // 字体渐变
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(149, 66, 226),
+    rgb(55, 226, 212)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// 作者
+.author {
+  font-family: KaiTi;
+  font-size: 1.1rem;
+  font-weight: 700;
 }

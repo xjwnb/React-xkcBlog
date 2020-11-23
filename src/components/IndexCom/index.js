@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useEffect } from "react";
 
 // 样式
 import "./index.less";
@@ -10,6 +11,13 @@ import { Layout } from "antd";
 const { Header, Footer, Content } = Layout;
 
 export default function IndexCom(props) {
+
+  useEffect(() => {
+    
+    return () => {
+    }
+  }, [])
+
   return (
     <div>
       <div className="index">
@@ -22,13 +30,13 @@ export default function IndexCom(props) {
             </div>
             <div className="nav">
               <ul>
-                <Link to="/blog" target="_blank" rel="noopener noreferrer">
+                <Link to="/blog" rel="noopener noreferrer">
                   <li>博客</li>
                 </Link>
-                <Link to="/login" target="_blank" rel="noopener noreferrer">
+                <Link to="/login" rel="noopener noreferrer">
                   <li>管理员登录</li>
                 </Link>
-                <a
+{/*                 <a
                   href="https://github.com/xjwnb/xkcBlog"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -51,7 +59,7 @@ export default function IndexCom(props) {
                       小程序版博客
                     </div>
                   </li>
-                </a>
+                </a> */}
               </ul>
             </div>
           </Header>

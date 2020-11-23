@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -22,6 +23,9 @@ import { baseRouter, blogRouter } from "./routes";
 // antd组件设置为中文
 import zhCN from "antd/es/locale/zh_CN";
 import { ConfigProvider } from "antd";
+
+// icon
+import "@/assets/icon/iconfont.css";
 
 ReactDOM.render(
   <ConfigProvider locale={zhCN}>
