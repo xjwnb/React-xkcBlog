@@ -109,31 +109,6 @@ function ArticleEdit(props) {
   useEffect(() => {
     // 获得 descriptionPricture
     getDesciptPicture();
-    // if (!descriptPicture) {
-    /* let element = document.getElementsByClassName("ant-upload-list-picture-card-container");
-      console.log(element);
-      let lastEle = element[element.length - 1];
-      console.log(lastEle);
-      if (lastEle) {
-        let href = lastEle.getElementsByClassName("ant-upload-list-item-thumbnail")[0].getAttribute("href");
-        setDescriptPicture(href);
-      } */
-    // console.log(lastEle.getElementsByClassName("ant-upload-list-item-thumbnail"));
-    // let href = lastEle.getElementsByClassName("ant-upload-list-item-thumbnail").getAttribute("href");
-    // console.log(href);
-    /* let element = document.querySelector(".ant-upload-list-item-info span");
-      console.log(element);
-      if (element !== null) {
-        let a = element.childNodes[0];
-        console.log(a);
-        if (a.nodeName === "A") {
-          let imageUrl = a.getAttribute("href");
-          if (imageUrl) {
-            setDescriptPicture(imageUrl);
-          }
-        }
-      } */
-    // }
   });
 
   // 富文本编辑器修改时
@@ -151,6 +126,7 @@ function ArticleEdit(props) {
     });
   };
 
+  // 获得并修改 descriptPicture
   const getDesciptPicture = () => {
     let element = document.getElementsByClassName(
       "ant-upload-list-picture-card-container"
@@ -168,6 +144,8 @@ function ArticleEdit(props) {
 
   // 确定修改按钮事件
   const onFinish = async (values) => {
+
+    // 编辑修改后的数据
     editAllData = {
       _id: defaultValue._id,
       ...values,
@@ -225,19 +203,8 @@ function ArticleEdit(props) {
 
   //
   const handleChange = (data) => {
-    console.log(data);
     let fileList = data.fileList;
-    /* if (!descriptPicture) {
-      let element = document.getElementsByClassName("ant-upload-list-picture-card-container");
-      console.log(element);
-      console.log(element[element.length - 1]);
-      let lastEle = element[element.length - 1];
-      if (lastEle) {
-        let href = lastEle.getElementsByClassName("ant-upload-list-item-thumbnail")[0].getAttribute("href");
-        console.log(href);
-        setDescriptPicture(href);
-      }
-    } */
+
     return setFileList(fileList);
   };
 
