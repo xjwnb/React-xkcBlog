@@ -197,10 +197,7 @@ class WriteMyBlog extends Component {
                 // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
                 fileList={fileList}
-                beforeUpload={(file, fileList) => {
-                  console.log(file, fileList);
-                  return false;
-                }}
+                beforeUpload={() => false}
                 onPreview={this.handlePreview}
                 onChange={this.handleChange}
               >

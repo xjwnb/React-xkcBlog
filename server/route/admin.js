@@ -136,7 +136,7 @@ admin.get("/getBlogInfoById", async (req, res) => {
   console.log("根据id 获得数据", req.query.id);
   let id = req.query.id;
   let data = await BlogInfo.findOne({ _id: id });
-  console.log(data);
+  // console.log(data);
   // 如果可以获取到数据
   if (data._id) {
     res.send({
@@ -156,13 +156,16 @@ admin.get("/getBlogInfoById", async (req, res) => {
 // 编辑博客
 admin.post("/editorBlogInfo", async (req, res) => {
   let id = req.body._id;
-  let { _id, title, author, content } = req.body;
-  console.log(req.body);
-  let time = req.body.time.time;
+  let { _id, title, descriptPicture, author, time, content } = req.body;
+  
+  // let time = req.body.time.time;
+  // console.log(descriptPicture.slice(0, 8));
+  // console.log(time)
   await BlogInfo.findByIdAndUpdate(
     { _id },
     {
       title,
+      descriptionPicture: descriptPicture,
       author,
       time,
       content,
