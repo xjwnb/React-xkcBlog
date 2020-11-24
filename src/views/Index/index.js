@@ -15,8 +15,8 @@ class Index extends Component {
     return (
       <div className="indexContent">
         <div className="index-font">
-          <h2>开发者：小卡车</h2>
-          <h3>技术栈：React、Redux、Express、Mongodb</h3>
+          <h3>博客前端：React</h3>
+          <h3>博客管理后台：Node.js、Express、MongoDB</h3>
         </div>
       </div>
     );
