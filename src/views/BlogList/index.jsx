@@ -1,60 +1,122 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // 高阶组件
-import { IndexHOC } from '../../components'
+import { IndexHOC, BlogTitleNav } from "../../components";
 // react-router-dom
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 // 请求
-import { getBlogInfoById } from '../../requests/blog'
+import { getBlogInfoById } from "../../requests/blog";
 // 样式
-import './index.less'
+import "./index.less";
 
 @IndexHOC
 @withRouter
 class BlogList extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      blogContent: '',
-      __html: ''
-    }
+      blogContent: "",
+      __html: "",
+      titleList: [],
+    };
   }
 
-componentDidMount() {
-  console.log(this.props)
-  let props = this.props
-  let id = props.match.params.id
-  console.log(id)
-  getBlogInfoById(id).then(res => {
-    console.log(res)
-    if (res.status === 200) {
-      let blogContent = res.data.blogInfo
-      this.setState({
-        blogContent,
-        __html: blogContent.content
-      })
-      return ;
-    } else {
-      props.history.push("/NotFound");
-    }
-  })
-}
+  async componentDidMount() {
+    console.log(this.props);
+    let props = this.props;
+    let id = props.match.params.id;
+    console.log(id);
+    const { blogInfo } = await this.getBlogDataById(id);
+    console.log(blogInfo);
+    this.setState(
+      {
+        blogContent: blogInfo,
+        __html: blogInfo.content,
+      },
+      () => {
+        if (this.state.__html !== "") {
+          let h2Array = document.getElementsByTagName("h2");
+          if (h2Array) {
+            console.log(h2Array);
+            console.log(h2Array.length);
+            let titleList = [];
+            // 标题数组
+            for (let i = 0, l = h2Array.length; i < l; i++) {
+              console.log(h2Array[i].innerHTML);
+              console.log(h2Array[i].offsetTop);
+              titleList.push({
+                title: h2Array[i].innerHTML,
+                offsetTop: h2Array[i].offsetTop,
+              });
+            }
+            console.log(titleList);
+            this.setState(
+              {
+                titleList,
+              },
+              () => {
+                console.log(this.state.titleList);
+              }
+            );
+          }
+        }
+      }
+    );
+    /* getBlogInfoById(id).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        let blogContent = res.data.blogInfo;
+        this.setState({
+          blogContent,
+          __html: blogContent.content,
+        });
+        return;
+      } else {
+        props.history.push("/NotFound");
+      }
+    }); */
+  }
 
+  getBlogDataById = (id) => {
+    return new Promise((resolve, reject) => {
+      getBlogInfoById(id).then((res) => {
+        if (res.status === 200) {
+          resolve(res.data);
+        } else {
+          reject(new Error("获取数据失败"));
+        }
+      });
+    });
+  };
 
   render() {
-    let state = this.state
+    let state = this.state;
+
     return (
-      <div className="conten">
-        <h1 className="title">{ state.blogContent.title }</h1>
-        <h3 className="author">{ state.blogContent.author }</h3>
-        <h3 className="blogtime">{ state.blogContent.time }</h3>
-        {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
-        <div className="blogContent">
-          <div dangerouslySetInnerHTML={{ __html: state.__html }} />
+      <div className="blogContent">
+        <div className="conten">
+          <h1 className="title">{state.blogContent.title}</h1>
+          <h3 className="author">{state.blogContent.author}</h3>
+          <h3 className="blogtime">{state.blogContent.time}</h3>
+          {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
+          <div className="blogContent">
+            <div dangerouslySetInnerHTML={{ __html: state.__html }} />
+          </div>
         </div>
+        {
+          state.titleList.length > 0 
+          ? 
+          (
+          <div className="blog-titleList">
+            <BlogTitleNav titleList={state.titleList} />
+          </div>
+          ) 
+          : 
+          null
+        }
       </div>
     );
   }
 }
 
-export default BlogList
+export default BlogList;

@@ -1,17 +1,38 @@
-.conten {
-  border: 1px solid #eeeeee;
-  border-radius: 20px;
-  background-color: #90bdd1;
-  opacity: .8;
-  padding: 30px;
-  width: 50%;
+.blogContent {
+  display: flex;
+  align-items: flex-start;
+  width: 70%;
   margin: 20px auto;
-  text-align: center;
 
-  .blogContent {
+
+  .conten {
     border: 1px solid #eeeeee;
-    padding: 20px;
-    text-align: initial;
-    background-color: #eeeeee;
+    border-radius: 20px;
+    background-color: #90bdd1;
+    opacity: .8;
+    padding: 30px;
+    width: 70%;
+
+    min-width: 600px;
+    // flex: 70%;
+    margin: 0px auto;
+    text-align: center;
+  
+    .blogContent {
+      border: 1px solid #eeeeee;
+      width: 100%;
+      padding: 20px;
+      text-align: initial;
+      background-color: #eeeeee;
+    }
+    .blogContent div {
+      width: 100%;
+    }
+  }
+  .blog-titleList {
+    position: sticky;
+    top: 20px;
   }
 }
+
+

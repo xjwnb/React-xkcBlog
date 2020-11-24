@@ -7,6 +7,23 @@ const { User } = require("../model/user");
 
 const { BlogInfo } = require("../model/admin");
 
+// 测试截取代码
+/* const query = BlogInfo.find();
+const resultsQuery = query.skip(1).limit(1);
+// console.log("resultQuery 截取：", resultsQuery);
+const copy = JSON.parse(JSON.stringify(resultsQuery));
+console.log(JSON.stringify(copy)); */
+// console.log(Object.prototype.toString.call(resultsQuery));
+// console.log(resultsQuery.toString());
+
+admin.get("/skip",async (req, res) => {
+  let data = await BlogInfo.find().skip(0).limit(1);
+  res.send({
+    status: 200,
+    data: data
+  })
+})
+
 // get
 admin.get("/user", (req, res) => {
   console.log(req.session);

@@ -1,3 +1,4 @@
+
 // 统一导出文件
 export { default as NotFoundCom } from './NotFoundCom'
 export { default as Frame } from './Frame'
@@ -10,6 +11,7 @@ export { default as BlogList } from './BlogList'
 export { default as BlogItem } from './BlogItem'
 export { default as Author } from './Author'
 export { default as CarouselAntd } from './CarouselAntd'
+export { default as BlogTitleNav } from './BlogTitleNav'
 
 // HOC
 export { default as IndexHOC } from './IndexHOC'

@@ -58,9 +58,18 @@ export function deleteBlogInfo(id) {
   })
 }
 
+// 注销登陆
 export function loginOut() {
   return request({
     url: "/admin/loginOut",
+    method: "get"
+  })
+}
+
+// 测试
+export function getSkip() {
+  return request({
+    url: "/admin/skip",
     method: "get"
   })
 }
