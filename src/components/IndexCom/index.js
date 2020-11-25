@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 
 // 样式
@@ -7,16 +6,38 @@ import "./index.less";
 import { Link } from "react-router-dom";
 
 // antd
-import { Layout } from "antd";
+import { Layout, BackTop } from "antd";
 const { Header, Footer, Content } = Layout;
 
 export default function IndexCom(props) {
-
   useEffect(() => {
-    
-    return () => {
-    }
-  }, [])
+    let content = document.getElementsByClassName("content")[0];
+    let header = document.getElementsByTagName("header")[0];
+    content.addEventListener("scroll", function () {
+      if (content.scrollTop === 0) {
+        // console.log("动画开始");
+        header.setAttribute("style", "top: 0px");
+      } else {
+        // console.log(header);
+        header.setAttribute("style", "top: -64px");
+        if (content.scrollTop > 20) {
+        }
+      }
+    });
+    return () => {};
+  }, []);
+
+  // 置顶样式
+  const backTopStyle = {
+    height: 40,
+    width: 40,
+    lineHeight: "40px",
+    borderRadius: 4,
+    backgroundColor: "#1088e9",
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 14,
+  };
 
   return (
     <div>
@@ -36,7 +57,7 @@ export default function IndexCom(props) {
                 <Link to="/login" rel="noopener noreferrer">
                   <li>管理员登录</li>
                 </Link>
-{/*                 <a
+                {/*                 <a
                   href="https://github.com/xjwnb/xkcBlog"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -63,8 +84,13 @@ export default function IndexCom(props) {
               </ul>
             </div>
           </Header>
-          <Content className="content">{props.children}</Content>
-          <Footer className="footer">Footer</Footer>
+          <Content className="content">
+            {props.children}
+            <BackTop visibilityHeight="100" target={() => document.getElementsByClassName("content")[0]}>
+              <div style={backTopStyle}>UP</div>
+            </BackTop>
+            <Footer className="footer"></Footer>
+          </Content>
         </Layout>
       </div>
     </div>

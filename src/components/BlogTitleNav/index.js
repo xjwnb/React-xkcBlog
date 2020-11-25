@@ -5,16 +5,29 @@ import "./index.less";
 
 export default function BlogTitleNav(props) {
   const [titleList, setTitleList] = useState(props.titleList);
-  // console.log(titleList);
-  // console.log(titleList.length);
+  const [scrollNumber] = useState(20);
+  const [scrollTime] = useState(10);
 
 
   // 点击滚动到指定位置
   const scrollHandler = function(offsetTop) {
     let container = document.getElementsByClassName("content")[0];
-    // console.log(container.scrollTop);
-    container.scrollTop = offsetTop - 70;
-    // console.log(offsetTop)
+    let timer = null;
+    if (container.scrollTop > offsetTop ) {
+      timer = setInterval(() => {
+        container.scrollTop = container.scrollTop - scrollNumber;
+        if (container.scrollTop < offsetTop) {
+          clearInterval(timer);
+        }
+      }, scrollTime);
+    } else {
+      timer = setInterval(() => {
+        container.scrollTop = container.scrollTop + scrollNumber;
+        if (container.scrollTop > offsetTop - 30) {
+          clearInterval(timer);
+        }
+      }, scrollTime);
+    }
   }
   return (
     <ul className="title-list-ul">
