@@ -1,3 +1,12 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-14 21:45:40
+ * @LastEditTime: 2020-11-25 16:44:06
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \react-blog\src\requests\admin.js
+ */
+
 
 import { request } from "./index";
 
@@ -65,6 +74,24 @@ export function loginOut() {
     method: "get"
   })
 }
+
+// 获取管理员信息
+export function getAdminInfo() {
+  return request({
+    url: "/adminInfo/getAdminInfo",
+    method: "get"
+  })
+}
+
+// 修改管理员信息
+export function postAdminInfo(data) {
+  return request({
+    url: "/adminInfo/postAdminInfo",
+    method: "post",
+    data
+  })
+}
+
 
 // 测试
 export function getSkip() {

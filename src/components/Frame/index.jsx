@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { withRouter } from 'react-router-dom'
 
@@ -13,21 +13,34 @@ import {
   UserOutlined,
   DashboardOutlined, 
   UnorderedListOutlined, 
-  EditOutlined
+  EditOutlined,
+  SolutionOutlined
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const icons = [<DashboardOutlined />, <UnorderedListOutlined />, <EditOutlined/>]
+const icons = [<DashboardOutlined />, <UnorderedListOutlined />, <EditOutlined/>, <SolutionOutlined />]
 
 function Frame(props) {
+
+  const [navMenus, setNavMenus] = useState([]);
   // 点击menu按钮
   const handleMenu = ({keyPath}) => {
     props.history.push(keyPath[0])
   }
   useEffect(() => {
     console.log("Frame：props" ,props);
+    let oldMenus = props.menus;
+    console.log(oldMenus);
+    let newMenus = oldMenus.filter(item => {
+      if (item.title) {
+        return true;
+      }
+      return false;
+    })
+    console.log(newMenus);
+    setNavMenus(newMenus)
     let timer = null;
     if (!props.username) {
       timer = setTimeout(() => {
@@ -62,14 +75,15 @@ function Frame(props) {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
+            theme="dark"
             selectedKeys={props.location.pathname}
             defaultOpenKeys={["sub1"]}
-            style={{ height: "100%", borderRight: 0 }}
+            style={{ borderRight: 0 }}
             onClick={handleMenu}
           >
             <SubMenu key="sub1" icon={<UserOutlined />} title={props.username}>
               {
-                props.menus.slice(0, props.menus.length - 1).map(menu => {
+                navMenus.map(menu => {
                   return (
                     <Menu.Item key={menu.pathName} >{icons[menu.id]} {menu.title}</Menu.Item>
                   )
