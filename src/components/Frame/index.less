@@ -1,6 +1,15 @@
-.content {
-  height: 100%;
+.content-layout {
+  // height: 100%;
   width: 100%;
+  position: absolute;
+  top: 64px;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+
+  .ant-layout{
+    overflow-y: scroll;
+  }
 }
 .logo {
   color: white;
@@ -20,4 +29,7 @@
   
 }
 
+body {
+  overflow-y: hidden;
+}
 

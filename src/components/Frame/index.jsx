@@ -71,7 +71,7 @@ function Frame(props) {
           <Button onClick={loginOutHandler}>注销</Button>
         </div>
       </Header>
-      <Layout className="content">
+      <div className="content-layout">
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
@@ -104,7 +104,7 @@ function Frame(props) {
             {props.children}
           </Content>
         </Layout>
-      </Layout>
+      </div>
     </Layout>
   );
 }
