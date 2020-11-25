@@ -1,24 +1,25 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 21:29:03
- * @LastEditTime: 2020-11-23 00:02:42
+ * @LastEditTime: 2020-11-25 18:55:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\Author\index.js
  */
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // 样式
 import './index.less'
 
 import { Image } from 'antd';
 
-export default function Author() {
+export default function Author(props) {
   const [msg, setMsg] = useState({
     authorImg: require("../../assets/images/author.png"),
-    name: "小卡车",
-    codeAge: 0,
-    identity: "大三"
+  });
+
+  useEffect(() => {
+    console.log(props);
   })
   return (
     <div className="auth">
@@ -26,9 +27,35 @@ export default function Author() {
         <Image src={msg.authorImg} alt="头像" />
       </div>
       <div className="msg">
-        <h3>昵称：{ msg.name }</h3>
-        <h3>码龄：{ msg.codeAge }年</h3>
-        <h3>身份：{ msg.identity }</h3>
+        <h3>昵称：<span>{ props.authorInfo.name }</span></h3>
+        <h3>码龄：<span>{ props.authorInfo.codeAge }</span>年</h3>
+        <h3>身份：<span>{ props.authorInfo.identity }</span></h3>
+        <h3>技术栈：
+          <div className="technologyStack">
+          {
+            props.authorInfo.technologyStack
+            ?
+            props.authorInfo.technologyStack.map(item => {
+              return (
+                <div key={item} className="technology">{ item }</div>
+              )
+            })
+            :
+            ""
+          }
+          </div>
+          {/* {
+            props.authorInfo !== {}
+            ?
+            props.authorInfo.technologyStack.map(item => {
+              return (
+                <span>{ item }</span>
+              )
+            })
+            :
+            null
+          } */}
+        </h3>
       </div>
     </div>
   )

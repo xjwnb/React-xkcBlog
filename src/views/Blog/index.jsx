@@ -5,7 +5,8 @@ import { IndexHOC, BlogList, Author, CarouselAntd } from "../../components";
 // 样式
 import "./index.less";
 // 请求方法
-import { getBlogInfo } from "../../requests/blog";
+import { getBlogInfo } from "@/requests/blog";
+import { getAdminInfo } from '@/requests/admin'
 
 import { Image } from "antd";
 
@@ -15,6 +16,7 @@ class Blog extends Component {
     super();
     this.state = {
       blogInfo: [],
+      authorInfo: {},
       carouselImages: [
         {
           id: 1,
@@ -55,8 +57,15 @@ class Blog extends Component {
         });
       }
     });
-    console.log(document.body.scrollHeight);
 
+    // 获取管理员信息
+    getAdminInfo().then(res => {
+      if (res.status === 200) {
+        this.setState({
+          authorInfo: res.data
+        })
+      }
+    })
 
   }
 
@@ -86,7 +95,7 @@ class Blog extends Component {
         </div>
 
         <div className="left-blog">
-          <Author className="author" />
+          <Author className="author" authorInfo={state.authorInfo} />
         </div>
       </div>
     );
