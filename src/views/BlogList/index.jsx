@@ -22,12 +22,12 @@ class BlogList extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     let props = this.props;
     let id = props.match.params.id;
-    console.log(id);
+    // console.log(id);
     const { blogInfo } = await this.getBlogDataById(id);
-    console.log(blogInfo);
+    // console.log(blogInfo);
     this.setState(
       {
         blogContent: blogInfo,
@@ -37,27 +37,22 @@ class BlogList extends Component {
         if (this.state.__html !== "") {
           let h2Array = document.getElementsByTagName("h2");
           if (h2Array) {
-            console.log(h2Array);
-            console.log(h2Array.length);
+            /*             console.log(h2Array);
+            console.log(h2Array.length); */
             let titleList = [];
             // 标题数组
             for (let i = 0, l = h2Array.length; i < l; i++) {
-              console.log(h2Array[i].innerHTML);
-              console.log(h2Array[i].offsetTop);
+              /*               console.log(h2Array[i].innerHTML);
+              console.log(h2Array[i].offsetTop); */
               titleList.push({
                 title: h2Array[i].innerHTML,
                 offsetTop: h2Array[i].offsetTop,
               });
             }
-            console.log(titleList);
-            this.setState(
-              {
-                titleList,
-              },
-              () => {
-                console.log(this.state.titleList);
-              }
-            );
+            // console.log(titleList);
+            this.setState({
+              titleList,
+            });
           }
         }
       }
@@ -103,17 +98,11 @@ class BlogList extends Component {
             <div dangerouslySetInnerHTML={{ __html: state.__html }} />
           </div>
         </div>
-        {
-          state.titleList.length > 0 
-          ? 
-          (
+        {state.titleList.length > 0 ? (
           <div className="blog-titleList">
             <BlogTitleNav titleList={state.titleList} />
           </div>
-          ) 
-          : 
-          null
-        }
+        ) : null}
       </div>
     );
   }

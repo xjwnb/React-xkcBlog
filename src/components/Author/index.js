@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 21:29:03
- * @LastEditTime: 2020-11-25 18:55:53
+ * @LastEditTime: 2020-11-25 19:06:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\Author\index.js
@@ -19,7 +19,6 @@ export default function Author(props) {
   });
 
   useEffect(() => {
-    console.log(props);
   })
   return (
     <div className="auth">

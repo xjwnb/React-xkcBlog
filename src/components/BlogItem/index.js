@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-19 18:12:16
+ * @LastEditTime: 2020-11-25 19:05:49
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \react-blog\src\components\BlogItem\index.js
+ */
 import React, { useEffect } from "react";
 
 // 样式
@@ -8,7 +16,6 @@ import { withRouter, Link } from "react-router-dom";
 import { Image } from "antd";
 
 function BlogItem(props) {
-  console.log(props);
   const { title, author, time, _id, descriptionPicture, visits } = props;
 
   useEffect(() => {

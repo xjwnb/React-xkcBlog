@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 
 // 封装 axios 方法，返回值是 Promise
@@ -13,16 +14,16 @@ export function request(options) {
     instance.interceptors.response.use((res) => {
       // console.log(res.data);
       if (res.status === 200) {
-        console.log(res);
+        // console.log(res);
         return res.data;
       } else {
-        console.log(res);
+        // console.log(res);
       }
     });
 
     // 请求拦截器
     instance.interceptors.request.use((config) => {
-      console.log(config);
+      // console.log(config);
       return config;
     });
 

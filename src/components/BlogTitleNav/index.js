@@ -5,8 +5,8 @@ import "./index.less";
 
 export default function BlogTitleNav(props) {
   const [titleList, setTitleList] = useState(props.titleList);
-  console.log(titleList);
-  console.log(titleList.length);
+  // console.log(titleList);
+  // console.log(titleList.length);
 
 
   // 点击滚动到指定位置
@@ -14,7 +14,7 @@ export default function BlogTitleNav(props) {
     let container = document.getElementsByClassName("content")[0];
     // console.log(container.scrollTop);
     container.scrollTop = offsetTop - 70;
-    console.log(offsetTop)
+    // console.log(offsetTop)
   }
   return (
     <ul className="title-list-ul">
