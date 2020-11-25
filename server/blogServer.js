@@ -1,4 +1,5 @@
 
+
 const express = require("express");
 const bodyParser = require("body-parser");
 // const cors = require("cors");
@@ -63,9 +64,12 @@ app.use(
 
 const admin = require("./route/admin");
 const blog = require("./route/blog");
+const adminInfo = require("./route/adminInfo");
+
 
 app.use("/admin", admin);
 app.use("/blog", blog);
+app.use("/adminInfo", adminInfo);
 // require('./model/user')    只插入一个管理员用户即可
 // require('./model/admin')    发表第一篇博客张完毕
 
