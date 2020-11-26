@@ -41,9 +41,9 @@ pre {
 }
 
 /*定义两端按钮的样式*/
-::-webkit-scrollbar-button {
+/* ::-webkit-scrollbar-button { */
   /* background-color: cyan; */
-}
+/* } */
 
 /*定义右下角汇合处的样式*/
 ::-webkit-scrollbar-corner {
