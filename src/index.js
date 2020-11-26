@@ -12,7 +12,7 @@ import * as serviceWorker from "./serviceWorker";
 import { Admin } from "./views";
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
@@ -30,7 +30,7 @@ import "@/assets/icon/iconfont.css";
 ReactDOM.render(
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>
-      <Router>
+      <Router basename="/blog/">
         <Switch>
           <Route
             path="/"
@@ -82,9 +82,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-
-import { getSkip } from '@/requests/admin';
-getSkip().then(res => {
-  console.log(res);
-})

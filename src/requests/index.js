@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-10 19:35:57
+ * @LastEditTime: 2020-11-26 16:50:47
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react-blog\src\requests\index.js
+ */
 
 import axios from 'axios'
 
@@ -6,7 +14,7 @@ export function request(options) {
   return new Promise((resolve, reject) => {
     // 创建 axios 实例
     const instance = axios.create({
-      baseURL: "http://localhost:8888",
+      baseURL: "/blogApi",
       timeout: 1000000,
     });
 
