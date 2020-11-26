@@ -9,6 +9,8 @@ import { getBlogInfoById } from "../../requests/blog";
 // 样式
 import "./index.less";
 
+import { Image } from 'antd';
+
 @IndexHOC
 @withRouter
 class BlogList extends Component {
@@ -76,6 +78,7 @@ class BlogList extends Component {
     return new Promise((resolve, reject) => {
       getBlogInfoById(id).then((res) => {
         if (res.status === 200) {
+          console.log(res);
           resolve(res.data);
         } else {
           reject(new Error("获取数据失败"));
@@ -88,11 +91,12 @@ class BlogList extends Component {
     let state = this.state;
 
     return (
-      <div className="blogContent">
+      <div className="blog-content">
         <div className="conten">
           <h1 className="title">{state.blogContent.title}</h1>
           <h3 className="author">{state.blogContent.author}</h3>
           <h3 className="blogtime">{state.blogContent.time}</h3>
+          {/* <img className="description-img" src={state.blogContent.descriptionPicture} /> */}
           {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
           <div className="blogContent">
             <div dangerouslySetInnerHTML={{ __html: state.__html }} />

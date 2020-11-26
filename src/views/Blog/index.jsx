@@ -6,9 +6,9 @@ import { IndexHOC, BlogList, Author, CarouselAntd } from "../../components";
 import "./index.less";
 // 请求方法
 import { getBlogInfo } from "@/requests/blog";
-import { getAdminInfo } from '@/requests/admin'
+import { getAdminInfo } from "@/requests/admin";
 
-import { Image } from "antd";
+import { Image, Pagination } from "antd";
 
 @IndexHOC
 class Blog extends Component {
@@ -59,14 +59,13 @@ class Blog extends Component {
     });
 
     // 获取管理员信息
-    getAdminInfo().then(res => {
+    getAdminInfo().then((res) => {
       if (res.status === 200) {
         this.setState({
-          authorInfo: res.data
-        })
+          authorInfo: res.data,
+        });
       }
-    })
-
+    });
   }
 
   // 筛选出置顶博客，并放置在数组前面
@@ -92,6 +91,11 @@ class Blog extends Component {
         <div className="right-blog">
           <CarouselAntd carouselImages={state.carouselImages} />
           <BlogList {...state.blogInfo} />
+          <Pagination
+            defaultCurrent={1}
+            total={state.blogInfo.length}
+            hideOnSinglePage
+          />
         </div>
 
         <div className="left-blog">
