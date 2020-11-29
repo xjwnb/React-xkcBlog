@@ -10,7 +10,10 @@ import { getAdminInfo } from "@/requests/admin";
 
 import { Image, Pagination } from "antd";
 
+import { withRouter } from 'react-router-dom'
+
 @IndexHOC
+@withRouter
 class Blog extends Component {
   constructor() {
     super();
@@ -66,6 +69,15 @@ class Blog extends Component {
         });
       }
     });
+
+    console.log(this.props);
+    // let search = this.props.location.search;
+    // console.log(search);
+    this.props.history.listen(() => {
+      console.log("historyChange");
+      console.log(this.props);
+      console.log(this.props.history.location.search);
+    })
   }
 
   // 筛选出置顶博客，并放置在数组前面

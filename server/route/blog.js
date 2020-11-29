@@ -7,6 +7,20 @@ const { User } = require("../model/user");
 
 const { BlogInfo } = require("../model/admin");
 
+// 查询
+blog.get("/getBlogBySearch", async (req, res) => {
+  let { title } = req.body;
+  // let title = "小程序";
+  let regSearch = new RegExp(title, "i")
+  console.log(regSearch);
+  let blogData = await BlogInfo.where("title", regSearch);
+  res.send({
+    status: 200,
+    msg: "正则查询成功",
+    data: blogData
+  })
+})
+
 // 获取博客数据
 blog.get('/getBlogInfo', async (req, res) => {
   let data = await BlogInfo.find();

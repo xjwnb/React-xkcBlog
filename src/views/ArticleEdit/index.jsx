@@ -9,9 +9,46 @@ import { Box } from "../../components";
 
 // 样式
 import "./index.less";
-import "braft-editor/dist/index.css";
 
+// 富文本
+import "braft-editor/dist/index.css";
+import "prismjs/themes/prism.css";
+import "prismjs/prism";
+/* import "prismjs/components/prism-javascript"
+import "prismjs/components/prism-java"
+import "prismjs/components/prism-php"
+import "prismjs/components/prism-css" */
+import "braft-extensions/dist/code-highlighter.css";
+import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import BraftEditor from "braft-editor";
+const options = {
+  includeEditors: ['editor-id-1'], // 指定该模块对哪些BraftEditor生效，不传此属性则对所有BraftEditor有效
+  excludeEditors: ['editor-id-2'],  // 指定该模块对哪些BraftEditor无效
+/*   syntaxs: [
+    {
+      name: 'JavaScript',
+      syntax: 'javascript'
+    }, {
+      name: 'HTML',
+      syntax: 'html'
+    }, {
+      name: 'CSS',
+      syntax: 'css'
+    }, {
+      name: 'Java',
+      syntax: 'java',
+    }, {
+      name: 'PHP',
+      syntax: 'php'
+    }
+  ] */
+}
+
+BraftEditor.use(CodeHighlighter(options))
+// 代码高亮
+/* BraftEditor.use(CodeHighlighter({
+  includeEditors: ['editor-with-code-highlighter'],
+})) */
 // import { ContentUtils } from "braft-utils";
 
 // antd 组件
@@ -142,7 +179,6 @@ function ArticleEdit(props) {
 
   // 确定修改按钮事件
   const onFinish = async (values) => {
-
     // 编辑修改后的数据
     editAllData = {
       _id: defaultValue._id,
@@ -204,6 +240,7 @@ function ArticleEdit(props) {
 
     return setFileList(fileList);
   };
+
 
   return (
     <div>
@@ -301,6 +338,7 @@ function ArticleEdit(props) {
               rules={[{ required: true, message: "请输入内容!" }]}
             >
               <BraftEditor
+                id="editor-with-code-highlighter"
                 value={editorState}
                 onChange={braftEditorHandleChange}
               />

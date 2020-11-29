@@ -12,6 +12,7 @@ export { default as BlogItem } from './BlogItem'
 export { default as Author } from './Author'
 export { default as CarouselAntd } from './CarouselAntd'
 export { default as BlogTitleNav } from './BlogTitleNav'
+export { default as SearchInput } from './SearchInput'
 
 // HOC
 export { default as IndexHOC } from './IndexHOC'

@@ -9,6 +9,8 @@ import { getBlogInfoById } from "../../requests/blog";
 // 样式
 import "./index.less";
 
+import Prism from "prismjs"
+
 import { Image } from 'antd';
 
 @IndexHOC

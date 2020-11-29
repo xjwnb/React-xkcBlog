@@ -12,10 +12,9 @@ code {
     monospace;
 }
 pre {
-  /* width: 100%; */
-  border: 1px solid #60e0cb;
+  border: 1px solid #60e0cb !important;
   padding: 2rem;
-  background-color: #60e0cb;
+  background-color: #34495e !important;
 }
 
 
@@ -49,4 +48,19 @@ pre {
 ::-webkit-scrollbar-corner {
   display: none;
   /* background: rgb(137, 206, 191); */
+}
+
+blockquote{
+  margin: 0;
+  padding: 15px;
+  background-color: #85a5c7 !important;
+  border-left: 3px solid #2c3e50 !important;
+  color: #ffffff !important;
+}
+
+.container img,
+.container audio,
+.container video{
+  max-width: 100%;
+  height: auto;
 }
