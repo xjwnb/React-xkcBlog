@@ -5,7 +5,7 @@ import { IndexHOC, BlogList, Author, CarouselAntd } from "../../components";
 // 样式
 import "./index.less";
 // 请求方法
-import { getBlogInfo } from "@/requests/blog";
+import { getBlogInfo, getBlogBySearch } from "@/requests/blog";
 import { getAdminInfo } from "@/requests/admin";
 
 import { Image, Pagination } from "antd";
@@ -70,15 +70,38 @@ class Blog extends Component {
       }
     });
 
-    console.log(this.props);
+    // console.log(this.props);
     // let search = this.props.location.search;
     // console.log(search);
     this.props.history.listen(() => {
-      console.log("historyChange");
-      console.log(this.props);
+      let searchStr = this.props.history.location.search
       console.log(this.props.history.location.search);
+      let { title } = this.queryFormat(searchStr);
+      console.log(title);
+      let _this = this;
+      getBlogBySearch(title).then(res => {
+        if (res.status === 200) {
+          _this.setState({
+            blogInfo: res.data
+          })
+        }
+      })
     })
   }
+
+  queryFormat(str) {
+    let formatStr = str.slice(1);
+    let querySplit = formatStr.split("&");
+    let result = {};
+    querySplit.forEach(item => {
+      // console.log(item);
+      let splitStr = item.split("=");
+      result[splitStr[0]] = splitStr[1];
+    });
+    return result
+  }
+
+
 
   // 筛选出置顶博客，并放置在数组前面
   screenSetBlogData(blogData) {
@@ -92,17 +115,24 @@ class Blog extends Component {
       }
     });
     return [...topBlogData, ...anthorBlogData];
-    // console.log("topBlogData", topBlogData);
-    // console.log("anthorBlogData", anthorBlogData);
   }
 
   render() {
     const state = this.state;
     return (
       <div className="BlogContent">
-        <div className="right-blog">
+        <div className="left-blog">
           <CarouselAntd carouselImages={state.carouselImages} />
-          <BlogList {...state.blogInfo} />
+{/*           {
+            state.blogInfo.length > 0
+            ?
+            <BlogList blogInfo={state.blogInfo}/>
+            :
+            null
+          } */}
+
+          <BlogList blogInfo={state.blogInfo}/>
+          
           <Pagination
             defaultCurrent={1}
             total={state.blogInfo.length}
@@ -110,7 +140,7 @@ class Blog extends Component {
           />
         </div>
 
-        <div className="left-blog">
+        <div className="right-blog">
           <Author className="author" authorInfo={state.authorInfo} />
         </div>
       </div>

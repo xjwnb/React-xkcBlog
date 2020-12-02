@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-19 17:49:30
+ * @LastEditTime: 2020-12-01 14:48:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react-blog\server\route\blog.js
+ */
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,7 +17,7 @@ const { BlogInfo } = require("../model/admin");
 
 // 查询
 blog.get("/getBlogBySearch", async (req, res) => {
-  let { title } = req.body;
+  let { title } = req.query;
   // let title = "小程序";
   let regSearch = new RegExp(title, "i")
   console.log(regSearch);

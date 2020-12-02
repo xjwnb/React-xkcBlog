@@ -14,3 +14,12 @@ export function getBlogInfoById(id) {
     }
   })
 }
+
+export function getBlogBySearch(title) {
+  return request({
+    url: "/blog/getBlogBySearch",
+    params: {
+      title
+    }
+  })
+}

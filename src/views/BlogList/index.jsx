@@ -29,7 +29,7 @@ class BlogList extends Component {
     // console.log(this.props);
     let props = this.props;
     let id = props.match.params.id;
-    // console.log(id);
+    console.log(id);
     const { blogInfo } = await this.getBlogDataById(id);
     // console.log(blogInfo);
     this.setState(

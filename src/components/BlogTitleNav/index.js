@@ -10,9 +10,17 @@ export default function BlogTitleNav(props) {
 
 
   // 点击滚动到指定位置
-  const scrollHandler = function(offsetTop) {
+  const scrollHandler = function(offsetTop, e) {
     let container = document.getElementsByClassName("content")[0];
-    let timer = null;
+    container.scrollTop = offsetTop;
+    let ul = document.querySelector(".title-list-ul");
+    let a = ul.getElementsByTagName("a");
+    for(let i = 0; i < a.length; i++) {
+      a[i].setAttribute("style", "color: #3cd4ae");
+    }
+    e.target.setAttribute("style", "color: rgb(65, 136, 202)");
+/*     let timer = null;
+    clearInterval(timer);
     if (container.scrollTop > offsetTop ) {
       timer = setInterval(() => {
         container.scrollTop = container.scrollTop - scrollNumber;
@@ -27,7 +35,7 @@ export default function BlogTitleNav(props) {
           clearInterval(timer);
         }
       }, scrollTime);
-    }
+    } */
   }
   return (
     <ul className="title-list-ul">
@@ -36,7 +44,7 @@ export default function BlogTitleNav(props) {
         props.titleList.map((item) => {
           return (
             <li key={item.offsetTop}>
-              <span onClick={scrollHandler.bind(this, item.offsetTop)}>{item.title}</span>
+              <a onClick={scrollHandler.bind(this, item.offsetTop)}>{item.title}</a>
             </li>
           );
         })
