@@ -19,12 +19,12 @@ import "prismjs/components/prism-java"
 import "prismjs/components/prism-php"
 import "prismjs/components/prism-css" */
 import "braft-extensions/dist/code-highlighter.css";
-import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
+import CodeHighlighter from "braft-extensions/dist/code-highlighter";
 import BraftEditor from "braft-editor";
 const options = {
-  includeEditors: ['editor-id-1'], // 指定该模块对哪些BraftEditor生效，不传此属性则对所有BraftEditor有效
-  excludeEditors: ['editor-id-2'],  // 指定该模块对哪些BraftEditor无效
-/*   syntaxs: [
+  includeEditors: ["editor-id-1"], // 指定该模块对哪些BraftEditor生效，不传此属性则对所有BraftEditor有效
+  excludeEditors: ["editor-id-2"], // 指定该模块对哪些BraftEditor无效
+  /*   syntaxs: [
     {
       name: 'JavaScript',
       syntax: 'javascript'
@@ -42,9 +42,23 @@ const options = {
       syntax: 'php'
     }
   ] */
-}
+};
+import Markdown from "braft-extensions/dist/markdown";
+import Table from "braft-extensions/dist/table";
+import "braft-extensions/dist/table.css";
+// BraftEditor 支持 markdown
+BraftEditor.use(Markdown());
+BraftEditor.use(
+  Table({
+    defaultColumns: 3, // 默认列数
+    defaultRows: 3, // 默认行数
+    withDropdown: false, // 插入表格前是否弹出下拉菜单
+    columnResizable: true, // 是否允许拖动调整列宽，默认false
+    exportAttrString: 'border="1" style="border-collapse: collapse"', // 指定输出HTML时附加到table标签上的属性字符串
+  })
+);
 
-BraftEditor.use(CodeHighlighter(options))
+BraftEditor.use(CodeHighlighter(options));
 // 代码高亮
 /* BraftEditor.use(CodeHighlighter({
   includeEditors: ['editor-with-code-highlighter'],
@@ -240,7 +254,6 @@ function ArticleEdit(props) {
 
     return setFileList(fileList);
   };
-
 
   return (
     <div>

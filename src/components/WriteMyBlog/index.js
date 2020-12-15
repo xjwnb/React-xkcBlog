@@ -1,8 +1,23 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import BraftEditor from "braft-editor";
+import Markdown from "braft-extensions/dist/markdown";
+import Table from "braft-extensions/dist/table";
 import { ContentUtils } from "braft-utils";
 import "braft-editor/dist/index.css";
+import "braft-extensions/dist/table.css";
+
+// BraftEditor 支持 markdown
+BraftEditor.use(Markdown());
+BraftEditor.use(
+  Table({
+    defaultColumns: 3, // 默认列数
+    defaultRows: 3, // 默认行数
+    withDropdown: false, // 插入表格前是否弹出下拉菜单
+    columnResizable: true, // 是否允许拖动调整列宽，默认false
+    exportAttrString: 'border="1" style="border-collapse: collapse"', // 指定输出HTML时附加到table标签上的属性字符串
+  })
+);
 
 // antd 组件
 import { Form, Input, Button, DatePicker, message, Upload, Modal } from "antd";
@@ -47,7 +62,6 @@ class WriteMyBlog extends Component {
     values.descriptPicture = this.state.descriptPicture;
     values.visits = 0;
     console.log("onFinish", values);
-    
 
     publish(values).then((res) => {
       console.log(res);
@@ -106,21 +120,24 @@ class WriteMyBlog extends Component {
   };
 
   uploadHandler = (param) => {
-    console.log(param)
+    console.log(param);
     if (!param.file) {
       return false;
     }
 
-    this.setState({
-      editorState: ContentUtils.insertMedias(this.state.editorState, [
-        {
-          type: "IMAGE",
-          url: URL.createObjectURL,
-        },
-      ]),
-    },() => {
-      console.log(this.state.editorState)
-    });
+    this.setState(
+      {
+        editorState: ContentUtils.insertMedias(this.state.editorState, [
+          {
+            type: "IMAGE",
+            url: URL.createObjectURL,
+          },
+        ]),
+      },
+      () => {
+        console.log(this.state.editorState);
+      }
+    );
   };
 
   // 描述图片
@@ -188,10 +205,11 @@ class WriteMyBlog extends Component {
           </Form.Item>
 
           {/* 描述图片 */}
-          <Form.Item 
-            label="描述图片" 
+          <Form.Item
+            label="描述图片"
             name="descriptPicture"
-            rules={[{ required: true, message: "请传入图片!" }]}>
+            rules={[{ required: true, message: "请传入图片!" }]}
+          >
             <div className="uploadPicture">
               <Upload
                 // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

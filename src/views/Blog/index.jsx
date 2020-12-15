@@ -10,7 +10,7 @@ import { getAdminInfo } from "@/requests/admin";
 
 import { Image, Pagination } from "antd";
 
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 @IndexHOC
 @withRouter
@@ -74,34 +74,34 @@ class Blog extends Component {
     // let search = this.props.location.search;
     // console.log(search);
     this.props.history.listen(() => {
-      let searchStr = this.props.history.location.search
+      let searchStr = this.props.history.location.search;
       console.log(this.props.history.location.search);
-      let { title } = this.queryFormat(searchStr);
-      console.log(title);
-      let _this = this;
-      getBlogBySearch(title).then(res => {
-        if (res.status === 200) {
-          _this.setState({
-            blogInfo: res.data
-          })
-        }
-      })
-    })
+      if (searchStr) {
+        let { title } = this.queryFormat(searchStr);
+        console.log(title);
+        let _this = this;
+        getBlogBySearch(title).then((res) => {
+          if (res.status === 200) {
+            _this.setState({
+              blogInfo: res.data,
+            });
+          }
+        });
+      }
+    });
   }
 
   queryFormat(str) {
     let formatStr = str.slice(1);
     let querySplit = formatStr.split("&");
     let result = {};
-    querySplit.forEach(item => {
+    querySplit.forEach((item) => {
       // console.log(item);
       let splitStr = item.split("=");
       result[splitStr[0]] = splitStr[1];
     });
-    return result
+    return result;
   }
-
-
 
   // 筛选出置顶博客，并放置在数组前面
   screenSetBlogData(blogData) {
@@ -123,7 +123,7 @@ class Blog extends Component {
       <div className="BlogContent">
         <div className="left-blog">
           <CarouselAntd carouselImages={state.carouselImages} />
-{/*           {
+          {/*           {
             state.blogInfo.length > 0
             ?
             <BlogList blogInfo={state.blogInfo}/>
@@ -131,8 +131,8 @@ class Blog extends Component {
             null
           } */}
 
-          <BlogList blogInfo={state.blogInfo}/>
-          
+          <BlogList blogInfo={state.blogInfo} />
+
           <Pagination
             defaultCurrent={1}
             total={state.blogInfo.length}

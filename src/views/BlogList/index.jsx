@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { getBlogInfoById } from "../../requests/blog";
 // 样式
 import "./index.less";
+import "braft-extensions/dist/table.css";
+
 
 import Prism from "prismjs"
 
@@ -26,6 +28,7 @@ class BlogList extends Component {
   }
 
   async componentDidMount() {
+    
     // console.log(this.props);
     let props = this.props;
     let id = props.match.params.id;
@@ -74,6 +77,7 @@ class BlogList extends Component {
         props.history.push("/NotFound");
       }
     }); */
+
   }
 
   getBlogDataById = (id) => {
