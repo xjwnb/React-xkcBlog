@@ -1,46 +1,52 @@
 import React, { useEffect, useState } from "react";
 
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 import "./index.less";
 
 import { Layout, Menu, Button } from "antd";
 
 // 请求
-import { loginOut } from '../../requests/admin'
+import { loginOut } from "../../requests/admin";
 
 import {
   UserOutlined,
-  DashboardOutlined, 
-  UnorderedListOutlined, 
+  DashboardOutlined,
+  UnorderedListOutlined,
   EditOutlined,
-  SolutionOutlined
+  SolutionOutlined,
+  TagOutlined
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const icons = [<DashboardOutlined />, <UnorderedListOutlined />, <EditOutlined/>, <SolutionOutlined />]
+const icons = [
+  <DashboardOutlined />,
+  <UnorderedListOutlined />,
+  <EditOutlined />,
+  <SolutionOutlined />,
+  <TagOutlined />,
+];
 
 function Frame(props) {
-
   const [navMenus, setNavMenus] = useState([]);
   // 点击menu按钮
-  const handleMenu = ({keyPath}) => {
-    props.history.push(keyPath[0])
-  }
+  const handleMenu = ({ keyPath }) => {
+    props.history.push(keyPath[0]);
+  };
   useEffect(() => {
-    console.log("Frame：props" ,props);
+    console.log("Frame：props", props);
     let oldMenus = props.menus;
     console.log(oldMenus);
-    let newMenus = oldMenus.filter(item => {
+    let newMenus = oldMenus.filter((item) => {
       if (item.title) {
         return true;
       }
       return false;
-    })
+    });
     console.log(newMenus);
-    setNavMenus(newMenus)
+    setNavMenus(newMenus);
     let timer = null;
     if (!props.username) {
       timer = setTimeout(() => {
@@ -49,19 +55,18 @@ function Frame(props) {
     }
     return () => {
       clearTimeout(timer);
-    }
-  }, [props])
-
+    };
+  }, [props]);
 
   // 登录注销
   const loginOutHandler = () => {
-    loginOut().then(res => {
+    loginOut().then((res) => {
       console.log("loginOut", res);
       if (res.status === 200) {
         props.history.push("/login");
       }
-    })
-  }
+    });
+  };
 
   return (
     <Layout>
@@ -82,13 +87,13 @@ function Frame(props) {
             onClick={handleMenu}
           >
             <SubMenu key="sub1" icon={<UserOutlined />} title={props.username}>
-              {
-                navMenus.map(menu => {
-                  return (
-                    <Menu.Item key={menu.pathName} >{icons[menu.id]} {menu.title}</Menu.Item>
-                  )
-                })
-              }
+              {navMenus.map((menu) => {
+                return (
+                  <Menu.Item key={menu.pathName}>
+                    {icons[menu.id]} {menu.title}
+                  </Menu.Item>
+                );
+              })}
             </SubMenu>
           </Menu>
         </Sider>
@@ -109,4 +114,4 @@ function Frame(props) {
   );
 }
 
-export default withRouter(Frame)
+export default withRouter(Frame);

@@ -4,6 +4,7 @@ import Article from '../views/Article'
 import writeBlog from '../views/WriteBlog'
 import ArticleEdit from '../views/ArticleEdit'
 import AdminInfo from '../views/AdminInfo'
+import TagInfo from '../views/TagInfo'
 
 
 export const adminRouter = [
@@ -37,6 +38,13 @@ export const adminRouter = [
   },
   {
     id: 4,
+    pathName: "/admin/tagInfo",
+    component: TagInfo,
+    title: "标签管理",
+    exact: true
+  },
+  {
+    id: 5,
     pathName: '/admin/edit/:id',
     component: ArticleEdit,
     exact: true
