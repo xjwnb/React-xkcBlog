@@ -84,6 +84,7 @@ export default function AdminInfo() {
     postAdminInfo(copyForm).then((res) => {
       if (res.status === 200) {
         setVisibleModel(false);
+        setAdminInfo(copyForm);
       }
     });
   };

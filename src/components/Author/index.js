@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 21:29:03
- * @LastEditTime: 2020-12-30 22:08:32
+ * @LastEditTime: 2020-12-31 01:36:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\Author\index.js
@@ -24,7 +24,7 @@ export default function Author(props) {
     <div className="auth">
       <div className="avatar">
         {/* <Image src={msg.authorImg} alt="头像" /> */}
-        <Avatar size={100} src={msg.authorImg} />
+        <Avatar size={100} src={props.authorInfo.avatar} />
       </div>
       <div className="msg">
         <h3>昵称：<span>{ props.authorInfo.name }</span></h3>
