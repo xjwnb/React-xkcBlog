@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // 请求方法
 import { getBlogInfoById, editorBlogInfo } from "../../requests/admin";
+// 获取标签
+import { getTagInfo } from "../../requests/tag";
 // 组件
 import { Box } from "../../components";
 
@@ -77,6 +79,7 @@ import {
   message,
   Upload,
   Modal,
+  Tag,
 } from "antd";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -98,6 +101,10 @@ function ArticleEdit(props) {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewTitle, setPreviewTitle] = useState("");
   const [descriptPicture, setDescriptPicture] = useState("");
+  // 标签数据
+  const [tagsData, setTagData] = useState([]);
+  // 选中的标签
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const [form] = Form.useForm();
 
@@ -113,9 +120,6 @@ function ArticleEdit(props) {
   };
 
   useEffect(() => {
-    console.log(form);
-    console.log(props);
-    console.log(props.match.params.id);
     let id = props.match.params.id;
     getBlogInfoById(id).then((res) => {
       console.log(res);
@@ -127,7 +131,14 @@ function ArticleEdit(props) {
         time,
         isShowTop,
         content,
+        tags,
       } = res.data;
+      // 设置选中的标签
+      setSelectedTags(tags);
+      // 获取标签数据
+      getTagInfo().then((res) => {
+        setTagData(res.data);
+      });
       setFileList([
         {
           uid: "-1",
@@ -151,7 +162,6 @@ function ArticleEdit(props) {
         time: monment(time),
         content: BraftEditor.createEditorState(content),
       });
-      console.log(time);
       setTime(time);
     });
   }, [props, form]);
@@ -171,7 +181,6 @@ function ArticleEdit(props) {
 
   // 时间选择器选择事件
   const onTimeChange = (value, dateString) => {
-    console.log(value, dateString);
     setTime({
       time: dateString,
     });
@@ -201,13 +210,11 @@ function ArticleEdit(props) {
       // time: getData.time,
       time,
       isShowTop: defaultValue.isShowTop,
+      tags: selectedTags,
       content: editorState.editorState,
     };
     // setEditData(editAllData);
-    console.log(editAllData);
-    console.log(editAllData.descriptPicture);
     editorBlogInfo(editAllData).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         setisLoading(false);
         message.success(res.msg);
@@ -222,7 +229,6 @@ function ArticleEdit(props) {
 
   // 返回文章管理按钮
   const backBtn = () => {
-    console.log(props);
     props.history.goBack();
   };
 
@@ -254,6 +260,12 @@ function ArticleEdit(props) {
 
     return setFileList(fileList);
   };
+
+  // 选择标签时候触发
+  const tagsHandleChange = (tag, checked) => {
+    const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t.tagName !== tag.tagName);
+    setSelectedTags(nextSelectedTags);
+  }
 
   return (
     <div>
@@ -342,6 +354,24 @@ function ArticleEdit(props) {
                 onChange={onTimeChange}
                 // onOk={onTimeOk}
               />
+            </Form.Item>
+
+            {/* 标签 */}
+            <Form.Item label="标签" name="tags">
+              <Form.Item
+                rules={[{ required: true, message: "请选择相关标签!" }]}
+              >
+                {tagsData && selectedTags &&
+                  tagsData.map((tag) => (
+                    <Tag.CheckableTag
+                      key={tag.tagName}
+                      checked={selectedTags.some(select => select.tagName === tag.tagName)}
+                      onChange={(checked) => tagsHandleChange(tag, checked)}
+                    >
+                      {tag.tagName}
+                    </Tag.CheckableTag>
+                  ))}
+              </Form.Item>
             </Form.Item>
 
             {/* 主要内容  BraftEditor 第三方富文本编辑器*/}

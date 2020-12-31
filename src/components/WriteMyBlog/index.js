@@ -20,11 +20,23 @@ BraftEditor.use(
 );
 
 // antd 组件
-import { Form, Input, Button, DatePicker, message, Upload, Modal } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  message,
+  Upload,
+  Modal,
+  Tag,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 // axios 方法
 import { publish } from "../../requests/admin";
+
+// 获取标签请求
+import { getTagInfo } from "../../requests/tag";
 
 // 组件
 
@@ -50,6 +62,10 @@ class WriteMyBlog extends Component {
       previewTitle: "",
       fileList: [],
       descriptPicture: "",
+      // 标签数据
+      tagsData: [],
+      // 选中的标签
+      selectedTags: [],
     };
   }
   // 发表事件
@@ -61,6 +77,7 @@ class WriteMyBlog extends Component {
     values.content = this.state.editorState;
     values.descriptPicture = this.state.descriptPicture;
     values.visits = 0;
+    values.tags = this.state.selectedTags;
     console.log("onFinish", values);
 
     publish(values).then((res) => {
@@ -177,8 +194,33 @@ class WriteMyBlog extends Component {
     }
   }
 
+  componentDidMount() {
+    getTagInfo().then((res) => {
+      console.log(res.data);
+      this.setState({
+        tagsData: res.data,
+      });
+    });
+  }
+
+
+  // 标签改变时触发
+  tagsHandleChange(tag, checked) {
+    const { selectedTags } = this.state;
+    const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
+    console.log('You are interested in: ', nextSelectedTags);
+    this.setState({ selectedTags: nextSelectedTags });
+  }
+
   render() {
-    const { previewVisible, previewImage, fileList, previewTitle } = this.state;
+    const {
+      previewVisible,
+      previewImage,
+      fileList,
+      previewTitle,
+      tagsData,
+      selectedTags,
+    } = this.state;
     const uploadButton = (
       <div>
         <PlusOutlined />
@@ -257,6 +299,26 @@ class WriteMyBlog extends Component {
               onChange={this.onTimeChange}
               onOk={this.onTimeOk}
             />
+          </Form.Item>
+
+          {/* 标签 */}
+          <Form.Item
+            label="标签"
+            name="tags"
+            
+          >
+            <Form.Item rules={[{ required: true, message: "请选择相关标签!" }]}>
+              {tagsData &&
+                tagsData.map((tag) => (
+                  <Tag.CheckableTag
+                    key={tag.tagName}
+                    checked={selectedTags.indexOf(tag) > -1}
+                    onChange={(checked) => this.tagsHandleChange(tag, checked)}
+                  >
+                    {tag.tagName}
+                  </Tag.CheckableTag>
+                ))}
+            </Form.Item>
           </Form.Item>
 
           {/* 主要内容  BraftEditor 第三方富文本编辑器*/}

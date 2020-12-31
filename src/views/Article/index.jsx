@@ -12,6 +12,7 @@ import {
   Alert,
   Modal,
   Image,
+  Tag
 } from "antd";
 
 import { connect } from "react-redux";
@@ -44,7 +45,6 @@ function Article(props) {
     let allData;
     let timer = null;
 
-    console.log(props);
     if (!props.login.isLogin) {
       // message.warning("请重新登录！");
       timer = setTimeout(() => {
@@ -61,7 +61,6 @@ function Article(props) {
     const deleteBlog = async (id) => {
       setvisible(true);
       setdeleteID(id);
-      console.log(allData);
       let thisBlogTitle = allData.find((item) => {
         if (item.key === id) {
           return true;
@@ -99,16 +98,16 @@ function Article(props) {
         if (blog.status === 200) {
           let column = blog.data[0];
           let columns1 = Object.keys(column);
-          console.log(columns1);
+          // console.log(columns1);
           let newColumns = columns1.filter((item) => {
-            if (item !== "_id" && item !== "content" && item !== "__v") {
+            if (item !== "_id" && item !== "content" && item !== "__v" && item !== "tags") {
               return true;
             }
             return false;
           });
+          newColumns.push("tags")
           newColumns.push("edit");
           newColumns.unshift("id");
-          console.log(blog.data);
 
           // data 数据
           allData = blog.data.map((item, index) => {
@@ -120,6 +119,7 @@ function Article(props) {
               descriptionPicture: item.descriptionPicture,
               time: item.time,
               isShowTop: item.isShowTop,
+              tags: item.tags,
               visits: item.visits,
             };
           });
@@ -160,6 +160,22 @@ function Article(props) {
                   );
                 },
               };
+              // 标签
+            } else if (item === "tags") {
+              return {
+                title: item,
+                key: item,
+                dataIndex: item,
+                render: (tags, record) => {
+                  return (
+                    tags.map(tag => {
+                      return (
+                        <Tag key={tag.tagName} color={tag.tagColor}>{tag.tagName}</Tag>
+                      )
+                    })
+                  )
+                }
+              }
               // 编辑
             } else if (item === "edit") {
               return {
@@ -236,7 +252,6 @@ function Article(props) {
     let id = deleteID;
     setconfirmLoading(true);
     deleteBlogInfo(id).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         setconfirmLoading(false);
         message.success("删除成功！");

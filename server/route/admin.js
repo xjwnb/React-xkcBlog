@@ -69,7 +69,7 @@ admin.post("/login", async (req, res) => {
 
 // 发表
 admin.post("/publish", (req, res) => {
-  let { title, author, time, content, descriptPicture, visits } = req.body;
+  let { title, author, time, content, descriptPicture, visits, tags } = req.body;
   if (
     title.length > 0 &&
     author.length > 0 &&
@@ -83,6 +83,7 @@ admin.post("/publish", (req, res) => {
       time,
       isShowTop: false,
       visits,
+      tags,
       content,
     }).then((response) => {
       console.log("插入博客成功");
@@ -173,7 +174,7 @@ admin.get("/getBlogInfoById", async (req, res) => {
 // 编辑博客
 admin.post("/editorBlogInfo", async (req, res) => {
   let id = req.body._id;
-  let { _id, title, descriptPicture, author, content } = req.body;
+  let { _id, title, descriptPicture, author, content, tags } = req.body;
   
   let time = req.body.time;
   // console.log(req.body.time);
@@ -186,6 +187,7 @@ admin.post("/editorBlogInfo", async (req, res) => {
       descriptionPicture: descriptPicture,
       author,
       time,
+      tags,
       content,
     }
   );
