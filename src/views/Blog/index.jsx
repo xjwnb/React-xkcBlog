@@ -75,10 +75,10 @@ class Blog extends Component {
     // console.log(search);
     this.props.history.listen(() => {
       let searchStr = this.props.history.location.search;
-      console.log(this.props.history.location.search);
+      // console.log(this.props.history.location.search);
       if (searchStr) {
         let { title } = this.queryFormat(searchStr);
-        console.log(title);
+        // console.log(title);
         let _this = this;
         getBlogBySearch(title).then((res) => {
           if (res.status === 200) {
@@ -122,7 +122,7 @@ class Blog extends Component {
     return (
       <div className="BlogContent">
         <div className="left-blog">
-          <CarouselAntd carouselImages={state.carouselImages} />
+          {/* <CarouselAntd carouselImages={state.carouselImages} /> */}
           {/*           {
             state.blogInfo.length > 0
             ?

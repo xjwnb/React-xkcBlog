@@ -180,22 +180,22 @@ export default function AdminInfo() {
             })}
           </h3>
           <h3>
-            <span className="iconfont icon-shenfen"></span>
+            <span className="iconfont icon-QQ"></span>
             QQ：
             {adminInfo.qq}
           </h3>
           <h3>
-            <span className="iconfont icon-shenfen"></span>
+            <span className="iconfont icon-185078emailmailstreamline"></span>
             邮箱：
             {adminInfo.email}
           </h3>
           <h3>
-            <span className="iconfont icon-shenfen"></span>
+            <span className="iconfont icon-weixin"></span>
             微信：
             {adminInfo.wx}
           </h3>
           <h3>
-            <span className="iconfont icon-shenfen"></span>
+            <span className="iconfont icon-GitHub"></span>
             Github：
             {adminInfo.github}
           </h3>

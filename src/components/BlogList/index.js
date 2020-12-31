@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 18:11:33
- * @LastEditTime: 2020-12-15 21:08:08
+ * @LastEditTime: 2021-01-01 00:32:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\BlogList\index.js
@@ -35,6 +35,7 @@ function BlogList(props) {
 
   return (
     <div className="blog-list">
+      <h3>博客日志 <span className="fontNum">{blog.length}</span> 篇</h3>
       {/* <SearchInput searchInput={searchInput} /> */}
       {blog.map((item, index) => (
         <BlogItem key={index} {...item} />

@@ -13,7 +13,7 @@ import "braft-extensions/dist/table.css";
 
 import Prism from "prismjs"
 
-import { Image } from 'antd';
+import { Image, Tag } from 'antd';
 
 @IndexHOC
 @withRouter
@@ -32,7 +32,6 @@ class BlogList extends Component {
     // console.log(this.props);
     let props = this.props;
     let id = props.match.params.id;
-    console.log(id);
     const { blogInfo } = await this.getBlogDataById(id);
     // console.log(blogInfo);
     this.setState(
@@ -84,7 +83,7 @@ class BlogList extends Component {
     return new Promise((resolve, reject) => {
       getBlogInfoById(id).then((res) => {
         if (res.status === 200) {
-          console.log(res);
+          console.log(res.data);
           resolve(res.data);
         } else {
           reject(new Error("获取数据失败"));
@@ -100,8 +99,22 @@ class BlogList extends Component {
       <div className="blog-content">
         <div className="conten">
           <h1 className="title">{state.blogContent.title}</h1>
-          <h3 className="author">{state.blogContent.author}</h3>
-          <h3 className="blogtime">{state.blogContent.time}</h3>
+          {/* <h3 className="author">{state.blogContent.author}</h3> */}
+          <h3 className="blogtime">
+            <i className="iconfont icon-riqi"></i>
+            {state.blogContent.time}
+          </h3>
+          <h3 className="blogtime">
+            <i className="iconfont icon-tag-fill"></i>
+            {
+              state.blogContent.tags && state.blogContent.tags.map(tag => {
+                return (
+                  <Tag key={tag.tagName} color={tag.tagColor}>{tag.tagName}</Tag>
+                )
+              })
+            }
+          </h3>
+          
           {/* <img className="description-img" src={state.blogContent.descriptionPicture} /> */}
           {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
           <div className="blogContent">
