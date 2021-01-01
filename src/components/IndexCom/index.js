@@ -9,17 +9,28 @@ import { Link } from "react-router-dom";
 import { Layout, BackTop } from "antd";
 const { Header, Footer, Content } = Layout;
 
-import { Author } from "@/components";
+import { Author, TagCloud } from "@/components";
 import { getAdminInfo } from "@/requests/admin";
+import { getTagInfo } from "@/requests/tag";
 
 export default function IndexCom(props) {
+  // 管理员信息
   const [authorInfo, setauthorInfo] = useState([]);
+  // 标签信息
+  const [tagInfo, setTagInfo] = useState([]);
 
   useEffect(() => {
     // 获取管理员信息
     getAdminInfo().then((res) => {
       if (res.status === 200) {
         setauthorInfo(res.data);
+      }
+    });
+
+    // 获取标签信息
+    getTagInfo().then((res) => {
+      if (res.status === 200) {
+        setTagInfo(res.data);
       }
     });
 
@@ -98,11 +109,10 @@ export default function IndexCom(props) {
           </Header>
           <Content className="content">
             <div className="blog-content-indexCom">
-              <div className="children-blog-content">
-              {props.children}
-              </div>
+              <div className="children-blog-content">{props.children}</div>
               <div className="right-blog">
                 <Author className="author" authorInfo={authorInfo} />
+                <TagCloud tagInfo={tagInfo} />
               </div>
             </div>
             {/* 置顶 */}

@@ -5,7 +5,11 @@ import { IndexHOC, BlogList, Author, CarouselAntd } from "../../components";
 // 样式
 import "./index.less";
 // 请求方法
-import { getBlogInfo, getBlogBySearch } from "@/requests/blog";
+import {
+  getBlogInfo,
+  getBlogBySearch,
+  getBlogInfoByTag,
+} from "@/requests/blog";
 import { getAdminInfo } from "@/requests/admin";
 
 import { Image, Pagination, Spin } from "antd";
@@ -21,32 +25,7 @@ class Blog extends Component {
       blogInfo: [],
       authorInfo: {},
       loading: true,
-      /* carouselImages: [
-        {
-          id: 1,
-          src: require("../../assets/images/carousel/carousel1.jpg"),
-        },
-        {
-          id: 2,
-          src: require("../../assets/images/carousel/carousel2.jpg"),
-        },
-        {
-          id: 3,
-          src: require("../../assets/images/carousel/carousel3.jpg"),
-        },
-        {
-          id: 4,
-          src: require("../../assets/images/carousel/carousel4.jpg"),
-        },
-        {
-          id: 5,
-          src: require("../../assets/images/carousel/carousel5.jpg"),
-        },
-        {
-          id: 6,
-          src: require("../../assets/images/carousel/carousel6.jpg"),
-        },
-      ], */
+      allBlogInfo: [],
     };
   }
 
@@ -58,41 +37,45 @@ class Blog extends Component {
         let screenBlogData = this.screenSetBlogData(res.data);
         this.setState({
           blogInfo: screenBlogData,
+          allBlogInfo: screenBlogData,
           loading: false,
-        });
-      }
-    });
-
-    // 获取管理员信息
-    /* getAdminInfo().then((res) => {
-      if (res.status === 200) {
-        this.setState({
-          authorInfo: res.data,
-        });
-      }
-    }); */
-
-    // console.log(this.props);
-    // let search = this.props.location.search;
-    // console.log(search);
-    this.props.history.listen(() => {
-      let searchStr = this.props.history.location.search;
-      // console.log(this.props.history.location.search);
-      if (searchStr) {
-        let { title } = this.queryFormat(searchStr);
-        // console.log(title);
-        let _this = this;
-        getBlogBySearch(title).then((res) => {
-          if (res.status === 200) {
-            _this.setState({
-              blogInfo: res.data,
-            });
-          }
         });
       }
     });
   }
 
+  componentDidUpdate(nextProps) {
+    // 根据location变化请求数据
+    if (nextProps.location !== this.props.location) {
+      let searchStr = this.props.history.location.search;
+      if (searchStr) {
+        let formatSearch = this.queryFormat(searchStr);
+        if (formatSearch.tagName) {
+          getBlogInfoByTag(formatSearch.tagName).then((res) => {
+            this.setState({
+              blogInfo: res.data,
+            });
+          });
+        }
+        // let { title } = this.queryFormat(searchStr);
+        // // console.log(title);
+        // let _this = this;
+        // getBlogBySearch(title).then((res) => {
+        //   if (res.status === 200) {
+        //     _this.setState({
+        //       blogInfo: res.data,
+        //     });
+        //   }
+        // });
+      } else {
+        this.setState({
+          blogInfo: this.state.allBlogInfo,
+        });
+      }
+    }
+  }
+
+  // 格式化 query 数据
   queryFormat(str) {
     let formatStr = str.slice(1);
     let querySplit = formatStr.split("&");
@@ -125,7 +108,6 @@ class Blog extends Component {
       <Spin spinning={state.loading}>
         <div className="BlogContent">
           <div className="left-blog">
-            {/* <CarouselAntd carouselImages={state.carouselImages} /> */}
             {/*           {
             state.blogInfo.length > 0
             ?
@@ -142,10 +124,6 @@ class Blog extends Component {
               hideOnSinglePage
             />
           </div>
-
-          {/* <div className="right-blog">
-          <Author className="author" authorInfo={state.authorInfo} />
-        </div> */}
         </div>
       </Spin>
     );
