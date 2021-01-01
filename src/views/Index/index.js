@@ -14,10 +14,10 @@ class Index extends Component {
   render(){
     return (
       <div className="indexContent">
-        <div className="index-font">
+        {/* <div className="index-font">
           <h3>博客前端：React</h3>
           <h3>博客管理后台：Node.js、Express、MongoDB</h3>
-        </div>
+        </div> */}
       </div>
     );
   }

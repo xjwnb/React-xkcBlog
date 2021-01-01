@@ -8,7 +8,7 @@ import "./index.less";
 import { getBlogInfo, getBlogBySearch } from "@/requests/blog";
 import { getAdminInfo } from "@/requests/admin";
 
-import { Image, Pagination } from "antd";
+import { Image, Pagination, Spin } from "antd";
 
 import { withRouter } from "react-router-dom";
 
@@ -20,7 +20,8 @@ class Blog extends Component {
     this.state = {
       blogInfo: [],
       authorInfo: {},
-      carouselImages: [
+      loading: true,
+      /* carouselImages: [
         {
           id: 1,
           src: require("../../assets/images/carousel/carousel1.jpg"),
@@ -45,7 +46,7 @@ class Blog extends Component {
           id: 6,
           src: require("../../assets/images/carousel/carousel6.jpg"),
         },
-      ],
+      ], */
     };
   }
 
@@ -57,18 +58,19 @@ class Blog extends Component {
         let screenBlogData = this.screenSetBlogData(res.data);
         this.setState({
           blogInfo: screenBlogData,
+          loading: false,
         });
       }
     });
 
     // 获取管理员信息
-    getAdminInfo().then((res) => {
+    /* getAdminInfo().then((res) => {
       if (res.status === 200) {
         this.setState({
           authorInfo: res.data,
         });
       }
-    });
+    }); */
 
     // console.log(this.props);
     // let search = this.props.location.search;
@@ -120,10 +122,11 @@ class Blog extends Component {
   render() {
     const state = this.state;
     return (
-      <div className="BlogContent">
-        <div className="left-blog">
-          {/* <CarouselAntd carouselImages={state.carouselImages} /> */}
-          {/*           {
+      <Spin spinning={state.loading}>
+        <div className="BlogContent">
+          <div className="left-blog">
+            {/* <CarouselAntd carouselImages={state.carouselImages} /> */}
+            {/*           {
             state.blogInfo.length > 0
             ?
             <BlogList blogInfo={state.blogInfo}/>
@@ -131,19 +134,20 @@ class Blog extends Component {
             null
           } */}
 
-          <BlogList blogInfo={state.blogInfo} />
+            <BlogList blogInfo={state.blogInfo} />
 
-          <Pagination
-            defaultCurrent={1}
-            total={state.blogInfo.length}
-            hideOnSinglePage
-          />
-        </div>
+            <Pagination
+              defaultCurrent={1}
+              total={state.blogInfo.length}
+              hideOnSinglePage
+            />
+          </div>
 
-        {/* <div className="right-blog">
+          {/* <div className="right-blog">
           <Author className="author" authorInfo={state.authorInfo} />
         </div> */}
-      </div>
+        </div>
+      </Spin>
     );
   }
 }

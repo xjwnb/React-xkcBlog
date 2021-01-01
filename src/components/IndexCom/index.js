@@ -99,7 +99,7 @@ export default function IndexCom(props) {
           <Content className="content">
             <div className="blog-content-indexCom">
               <div className="children-blog-content">
-                {props.children}
+              {props.children}
               </div>
               <div className="right-blog">
                 <Author className="author" authorInfo={authorInfo} />

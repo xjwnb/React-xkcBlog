@@ -10,10 +10,9 @@ import { getBlogInfoById } from "../../requests/blog";
 import "./index.less";
 import "braft-extensions/dist/table.css";
 
+import Prism from "prismjs";
 
-import Prism from "prismjs"
-
-import { Image, Tag } from 'antd';
+import { Image, Tag, Spin } from "antd";
 
 @IndexHOC
 @withRouter
@@ -24,11 +23,11 @@ class BlogList extends Component {
       blogContent: "",
       __html: "",
       titleList: [],
+      loading: true,
     };
   }
 
   async componentDidMount() {
-    
     // console.log(this.props);
     let props = this.props;
     let id = props.match.params.id;
@@ -38,6 +37,7 @@ class BlogList extends Component {
       {
         blogContent: blogInfo,
         __html: blogInfo.content,
+        loading: false
       },
       () => {
         if (this.state.__html !== "") {
@@ -76,14 +76,12 @@ class BlogList extends Component {
         props.history.push("/NotFound");
       }
     }); */
-
   }
 
   getBlogDataById = (id) => {
     return new Promise((resolve, reject) => {
       getBlogInfoById(id).then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           resolve(res.data);
         } else {
           reject(new Error("获取数据失败"));
@@ -96,37 +94,40 @@ class BlogList extends Component {
     let state = this.state;
 
     return (
-      <div className="blog-content">
-        <div className="conten">
-          <h1 className="title">{state.blogContent.title}</h1>
-          {/* <h3 className="author">{state.blogContent.author}</h3> */}
-          <h3 className="blogtime">
-            <i className="iconfont icon-riqi"></i>
-            {state.blogContent.time}
-          </h3>
-          <h3 className="blogtime">
-            <i className="iconfont icon-tag-fill"></i>
-            {
-              state.blogContent.tags && state.blogContent.tags.map(tag => {
-                return (
-                  <Tag key={tag.tagName} color={tag.tagColor}>{tag.tagName}</Tag>
-                )
-              })
-            }
-          </h3>
-          
-          {/* <img className="description-img" src={state.blogContent.descriptionPicture} /> */}
-          {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
-          <div className="blogContent">
-            <div dangerouslySetInnerHTML={{ __html: state.__html }} />
+      <Spin spinning={state.loading}>
+        <div className="blog-content">
+          <div className="conten">
+            <h1 className="title">{state.blogContent.title}</h1>
+            {/* <h3 className="author">{state.blogContent.author}</h3> */}
+            <h3 className="blogtime">
+              <i className="iconfont icon-riqi"></i>
+              {state.blogContent.time}
+            </h3>
+            <h3 className="blogtime">
+              <i className="iconfont icon-tag-fill"></i>
+              {state.blogContent.tags &&
+                state.blogContent.tags.map((tag) => {
+                  return (
+                    <Tag key={tag.tagName} color={tag.tagColor}>
+                      {tag.tagName}
+                    </Tag>
+                  );
+                })}
+            </h3>
+
+            {/* <img className="description-img" src={state.blogContent.descriptionPicture} /> */}
+            {/* <h1 className="blogcontent">{ state.blogContent.content }</h1> */}
+            <div className="blogContent">
+              <div dangerouslySetInnerHTML={{ __html: state.__html }} />
+            </div>
           </div>
-        </div>
-        {/* {state.titleList.length > 0 ? (
+          {/* {state.titleList.length > 0 ? (
           <div className="blog-titleList">
             <BlogTitleNav titleList={state.titleList} />
           </div>
         ) : null} */}
-      </div>
+        </div>
+      </Spin>
     );
   }
 }
