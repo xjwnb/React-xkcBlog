@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // 样式
 import "./index.less";
@@ -9,8 +9,20 @@ import { Link } from "react-router-dom";
 import { Layout, BackTop } from "antd";
 const { Header, Footer, Content } = Layout;
 
+import { Author } from "@/components";
+import { getAdminInfo } from "@/requests/admin";
+
 export default function IndexCom(props) {
+  const [authorInfo, setauthorInfo] = useState([]);
+
   useEffect(() => {
+    // 获取管理员信息
+    getAdminInfo().then((res) => {
+      if (res.status === 200) {
+        setauthorInfo(res.data);
+      }
+    });
+
     let content = document.getElementsByClassName("content")[0];
     let header = document.getElementsByTagName("header")[0];
     content.addEventListener("scroll", function () {
@@ -85,8 +97,19 @@ export default function IndexCom(props) {
             </div>
           </Header>
           <Content className="content">
-            {props.children}
-            <BackTop visibilityHeight="100" target={() => document.getElementsByClassName("content")[0]}>
+            <div className="blog-content-indexCom">
+              <div className="children-blog-content">
+                {props.children}
+              </div>
+              <div className="right-blog">
+                <Author className="author" authorInfo={authorInfo} />
+              </div>
+            </div>
+            {/* 置顶 */}
+            <BackTop
+              visibilityHeight="100"
+              target={() => document.getElementsByClassName("content")[0]}
+            >
               <div style={backTopStyle}>UP</div>
             </BackTop>
             <Footer className="footer"></Footer>

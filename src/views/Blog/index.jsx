@@ -140,9 +140,9 @@ class Blog extends Component {
           />
         </div>
 
-        <div className="right-blog">
+        {/* <div className="right-blog">
           <Author className="author" authorInfo={state.authorInfo} />
-        </div>
+        </div> */}
       </div>
     );
   }

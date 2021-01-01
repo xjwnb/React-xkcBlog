@@ -121,11 +121,11 @@ class BlogList extends Component {
             <div dangerouslySetInnerHTML={{ __html: state.__html }} />
           </div>
         </div>
-        {state.titleList.length > 0 ? (
+        {/* {state.titleList.length > 0 ? (
           <div className="blog-titleList">
             <BlogTitleNav titleList={state.titleList} />
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     );
   }
