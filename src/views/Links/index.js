@@ -41,10 +41,8 @@ function Links() {
 
   // 提交友链信息
   const onFinish = (values) => {
-    console.log("Success:", values);
     form.resetFields();
     postLinksInfo(values).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         message.success("友链信息已成功提交！");
       } else {

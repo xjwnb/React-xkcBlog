@@ -131,7 +131,6 @@ admin.post("/editToShowTop", async (req, res) => {
   let id = req.body.id;
   // 获取更新前对应 ID 的数据
   let blogInfo = await BlogInfo.findOne({ _id: id });
-  console.log(id, blogInfo);
   // 更新数据
   await BlogInfo.findOneAndUpdate(
     { _id: id },
@@ -141,7 +140,7 @@ admin.post("/editToShowTop", async (req, res) => {
   );
   // 获取更新后的对应 ID 的数据
   let data = await BlogInfo.findOne({ _id: id });
-  console.log(data);
+  // console.log(data);
   res.send({
     status: 200,
     data,

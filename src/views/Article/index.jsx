@@ -12,7 +12,7 @@ import {
   Alert,
   Modal,
   Image,
-  Tag
+  Tag,
 } from "antd";
 
 import { connect } from "react-redux";
@@ -77,16 +77,18 @@ function Article(props) {
     // 修改 isShouTop 状态
     const changeShowTop = (id) => {
       editTopShowTop(id).then((res) => {
+        /* if (res.status === 200) {
+          setdata(res.data);
+        } */
         let newData = allData.map((item, index) => {
           if (item.key === id) {
             return {
               ...item,
-              isShowTop: res.data.isShowTop,
+              isShowTop: !item.isShowTop,
             };
           }
           return item;
         });
-
         setdata(newData);
       });
     };
@@ -100,12 +102,17 @@ function Article(props) {
           let columns1 = Object.keys(column);
           // console.log(columns1);
           let newColumns = columns1.filter((item) => {
-            if (item !== "_id" && item !== "content" && item !== "__v" && item !== "tags") {
+            if (
+              item !== "_id" &&
+              item !== "content" &&
+              item !== "__v" &&
+              item !== "tags"
+            ) {
               return true;
             }
             return false;
           });
-          newColumns.push("tags")
+          newColumns.push("tags");
           newColumns.push("edit");
           newColumns.unshift("id");
 
@@ -155,7 +162,7 @@ function Article(props) {
                 render: (text, record) => {
                   return (
                     <div className="descriptionPicture">
-                      <Image src={text}/>
+                      <Image src={text} />
                     </div>
                   );
                 },
@@ -167,15 +174,15 @@ function Article(props) {
                 key: item,
                 dataIndex: item,
                 render: (tags, record) => {
-                  return (
-                    tags.map(tag => {
-                      return (
-                        <Tag key={tag.tagName} color={tag.tagColor}>{tag.tagName}</Tag>
-                      )
-                    })
-                  )
-                }
-              }
+                  return tags.map((tag) => {
+                    return (
+                      <Tag key={tag.tagName} color={tag.tagColor}>
+                        {tag.tagName}
+                      </Tag>
+                    );
+                  });
+                },
+              };
               // 编辑
             } else if (item === "edit") {
               return {
