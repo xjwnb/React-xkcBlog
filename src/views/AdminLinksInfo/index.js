@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-03 16:45:14
- * @LastEditTime: 2021-01-03 22:43:34
+ * @LastEditTime: 2021-01-03 23:18:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\views\AdminLinksInfo\index.js
@@ -76,7 +76,7 @@ export default function AdminLinksInfo() {
       title: "网站链接",
       dataIndex: "website",
       key: "website",
-      render: (text) => <a href={text}>{text}</a>,
+      render: (text) => <a href={text} target="_blank" >{text}</a>,
     },
     {
       title: "网站描述",
