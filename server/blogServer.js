@@ -64,12 +64,14 @@ const admin = require("./route/admin");
 const blog = require("./route/blog");
 const adminInfo = require("./route/adminInfo");
 const tagInfo = require("./route/tagInfo");
+const linksInfo = require("./route/linksInfo");
 
 
 app.use("/admin", admin);
 app.use("/blog", blog);
 app.use("/adminInfo", adminInfo);
 app.use("/tagInfo", tagInfo);
+app.use("/linksInfo", linksInfo);
 // require('./model/user')    只插入一个管理员用户即可
 // require('./model/admin')    发表第一篇博客张完毕
 // require("./model/tagInfo"); 插入第一条tag标签

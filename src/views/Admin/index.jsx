@@ -20,7 +20,7 @@ function Admin(props) {
   // const [nProps] = useState(props)
   const { dispatch } = props;
 
-  console.log(props);
+  // console.log(props);
 
   useEffect(() => {
     user().then(async (res) => {

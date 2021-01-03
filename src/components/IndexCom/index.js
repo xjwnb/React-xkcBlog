@@ -82,6 +82,9 @@ export default function IndexCom(props) {
                 <Link to="/blog" rel="noopener noreferrer">
                   <li>博客</li>
                 </Link>
+                <Link to="/blog/links" rel="noopener noreferrer">
+                  <li>友链</li>
+                </Link>
                 <Link to="/login" rel="noopener noreferrer">
                   <li>管理员登录</li>
                 </Link>

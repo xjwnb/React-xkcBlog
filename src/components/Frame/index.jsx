@@ -15,7 +15,8 @@ import {
   UnorderedListOutlined,
   EditOutlined,
   SolutionOutlined,
-  TagOutlined
+  TagOutlined,
+  PaperClipOutlined
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -27,6 +28,7 @@ const icons = [
   <EditOutlined />,
   <SolutionOutlined />,
   <TagOutlined />,
+  <PaperClipOutlined />
 ];
 
 function Frame(props) {
@@ -36,16 +38,16 @@ function Frame(props) {
     props.history.push(keyPath[0]);
   };
   useEffect(() => {
-    console.log("Frame：props", props);
+    // console.log("Frame：props", props);
     let oldMenus = props.menus;
-    console.log(oldMenus);
+    // console.log(oldMenus);
     let newMenus = oldMenus.filter((item) => {
       if (item.title) {
         return true;
       }
       return false;
     });
-    console.log(newMenus);
+    // console.log(newMenus);
     setNavMenus(newMenus);
     let timer = null;
     if (!props.username) {
@@ -61,7 +63,7 @@ function Frame(props) {
   // 登录注销
   const loginOutHandler = () => {
     loginOut().then((res) => {
-      console.log("loginOut", res);
+      // console.log("loginOut", res);
       if (res.status === 200) {
         props.history.push("/login");
       }
