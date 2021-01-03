@@ -49,11 +49,15 @@ class Blog extends Component {
     if (nextProps.location !== this.props.location) {
       let searchStr = this.props.history.location.search;
       if (searchStr) {
+        this.setState({
+          loading: true,
+        });
         let formatSearch = this.queryFormat(searchStr);
         if (formatSearch.tagName) {
           getBlogInfoByTag(formatSearch.tagName).then((res) => {
             this.setState({
               blogInfo: res.data,
+              loading: false,
             });
           });
         }

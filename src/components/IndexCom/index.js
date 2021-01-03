@@ -14,12 +14,17 @@ import { getAdminInfo } from "@/requests/admin";
 import { getTagInfo } from "@/requests/tag";
 
 export default function IndexCom(props) {
+  
   // 管理员信息
   const [authorInfo, setauthorInfo] = useState([]);
   // 标签信息
   const [tagInfo, setTagInfo] = useState([]);
+  const childrenRef = React.useRef(null);
+  
 
   useEffect(() => {
+    // props.children.ref = childrenRef;
+    // console.log(props.children)
     // 获取管理员信息
     getAdminInfo().then((res) => {
       if (res.status === 200) {

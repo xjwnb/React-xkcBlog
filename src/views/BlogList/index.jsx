@@ -14,8 +14,8 @@ import Prism from "prismjs";
 
 import { Image, Tag, Spin } from "antd";
 
-@IndexHOC
-@withRouter
+/* @IndexHOC
+@withRouter */
 class BlogList extends Component {
   constructor() {
     super();
@@ -59,6 +59,7 @@ class BlogList extends Component {
             this.setState({
               titleList,
             });
+            
           }
         }
       }
@@ -132,4 +133,4 @@ class BlogList extends Component {
   }
 }
 
-export default BlogList;
+export default IndexHOC(withRouter(BlogList));
