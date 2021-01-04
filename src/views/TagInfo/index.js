@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Box } from "../../components";
 
 // antd
-import { Input, Form, Button, Tag, message } from "antd";
+import { Input, Form, Button, Tag, message, Divider } from "antd";
 
 // 颜色选择器 react-color
 import { SketchPicker } from "react-color";
@@ -100,6 +100,7 @@ export default function TagInfo() {
             </Tag>
           );
         })}
+        <Divider></Divider>
       <Form
         {...layout}
         name="basic"
@@ -128,7 +129,7 @@ export default function TagInfo() {
         {/* 提交按钮 */}
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+            增加标签
           </Button>
         </Form.Item>
       </Form>
