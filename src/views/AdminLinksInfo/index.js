@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-03 16:45:14
- * @LastEditTime: 2021-01-04 16:44:26
+ * @LastEditTime: 2021-01-04 20:34:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\views\AdminLinksInfo\index.js
@@ -63,9 +63,7 @@ export default function AdminLinksInfo() {
       title: "网站名称",
       dataIndex: "websiteName",
       key: "websiteName",
-      render: (text) => (
-        <div className="websiteName-text">{text}</div>
-      )
+      render: (text) => <div className="websiteName-text">{text}</div>,
     },
     {
       title: "网站Logo",
@@ -79,7 +77,11 @@ export default function AdminLinksInfo() {
       title: "网站链接",
       dataIndex: "website",
       key: "website",
-      render: (text) => <a className="websiite-text" href={text} target="_blank" >{text}</a>,
+      render: (text) => (
+        <a className="websiite-text" href={text} target="_blank">
+          {text}
+        </a>
+      ),
     },
     {
       title: "网站描述",
@@ -151,6 +153,7 @@ export default function AdminLinksInfo() {
 
   // 删除
   const deleteLinksInfoHandle = (data) => {
+    form.resetFields();
     setIsDeleteModalVisible(true);
     setDeleteLinkInfo(data);
   };
@@ -159,11 +162,15 @@ export default function AdminLinksInfo() {
   const editLinksInfoHandle = (data) => {
     setInitialValuesForm(data);
     showModal();
+    setTimeout(() => {
+      form.resetFields();
+    });
   };
 
   // 显示 modal
   const showModal = () => {
     setIsModalVisible(true);
+    form.resetFields();
   };
 
   // modal 确定事件
@@ -179,6 +186,32 @@ export default function AdminLinksInfo() {
           if (res.status === 200) {
             message.success("修改成功!");
             setIsModalVisible(false);
+            let isPassState = passLinksInfo.some(
+              (link) => link._id === values._id
+            );
+            if (isPassState) {
+              let newPassLinksInfo = passLinksInfo.map((link) => {
+                if (link._id === values._id) {
+                  return {
+                    ...link,
+                    ...values,
+                  };
+                }
+                return link;
+              });
+              setPassLinksInfo(newPassLinksInfo);
+            } else {
+              let newNotPassLinksInfo = notPassLinksInfo.map((link) => {
+                if (link._id === values._id) {
+                  return {
+                    ...link,
+                    ...values,
+                  };
+                }
+                return link;
+              });
+              setNotPassLinksInfo(newNotPassLinksInfo);
+            }
           }
         });
       })
@@ -189,6 +222,7 @@ export default function AdminLinksInfo() {
 
   // modal 取消事件
   const handleCancel = () => {
+    form.resetFields();
     setIsModalVisible(false);
   };
 
@@ -201,8 +235,9 @@ export default function AdminLinksInfo() {
     // console.log("Failed:", errorInfo);
   };
 
-  // 删除 Modal 事件
+  // linkInfo 删除 Modal 事件
   const handleDeleteOk = () => {
+    form.resetFields();
     setIsDeleteModalVisible(false);
     let data = deleteLinkInfo;
     let isPassState = passLinksInfo.includes(data) ? true : false;
@@ -225,8 +260,9 @@ export default function AdminLinksInfo() {
   };
 
   const handleDeleteCancel = () => {
+    form.resetFields();
     setIsDeleteModalVisible(false);
-  }
+  };
 
   useEffect(() => {
     getLinksInfo().then((res) => {
@@ -248,6 +284,10 @@ export default function AdminLinksInfo() {
         setPassLinksInfo(passInfo);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    // form.resetFields();
   }, [isModalVisible]);
 
   return (
@@ -266,6 +306,7 @@ export default function AdminLinksInfo() {
       {/* 表单 Modal */}
       <Modal
         title="编辑友链信息"
+        getContainer={false}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
