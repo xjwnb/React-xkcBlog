@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-03 16:45:14
- * @LastEditTime: 2021-01-03 23:18:54
+ * @LastEditTime: 2021-01-04 16:44:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\views\AdminLinksInfo\index.js
@@ -63,6 +63,9 @@ export default function AdminLinksInfo() {
       title: "网站名称",
       dataIndex: "websiteName",
       key: "websiteName",
+      render: (text) => (
+        <div className="websiteName-text">{text}</div>
+      )
     },
     {
       title: "网站Logo",
@@ -76,13 +79,13 @@ export default function AdminLinksInfo() {
       title: "网站链接",
       dataIndex: "website",
       key: "website",
-      render: (text) => <a href={text} target="_blank" >{text}</a>,
+      render: (text) => <a className="websiite-text" href={text} target="_blank" >{text}</a>,
     },
     {
       title: "网站描述",
       dataIndex: "describe",
       key: "describe",
-      render: (text) => <p>{text}</p>,
+      render: (text) => <div className="describe-text">{text}</div>,
     },
     {
       title: "是否通过",

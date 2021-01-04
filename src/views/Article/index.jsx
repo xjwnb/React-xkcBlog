@@ -69,17 +69,17 @@ function Article(props) {
       });
       await setdeleteTitle(thisBlogTitle.title);
 
-      /*  deleteBlogInfo(id).then(res => {
-        console.log(res)
-      }) */
+      //  deleteBlogInfo(id).then(res => {
+      //   console.log(res)
+      // })
     };
 
     // 修改 isShouTop 状态
     const changeShowTop = (id) => {
       editTopShowTop(id).then((res) => {
-        /* if (res.status === 200) {
-          setdata(res.data);
-        } */
+        // if (res.status === 200) {
+        //   setdata(res.data);
+        // }
         let newData = allData.map((item, index) => {
           if (item.key === id) {
             return {

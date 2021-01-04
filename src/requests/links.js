@@ -1,3 +1,4 @@
+
 import { request } from "./index";
 
 // 获取标签
@@ -38,12 +39,19 @@ export function deleteLinksInfo(id) {
   });
 }
 
-
 // 编辑友链信息
 export function editorLinksInfo(data) {
   return request({
     url: "/linksInfo/editorLinksInfo",
     method: "post",
-    data
+    data,
+  });
+}
+
+// 获取所有已通过的友链信息
+export function getAllPassLinksInfo() {
+  return request({
+    url: "/linksInfo/getAllPassLinksInfo",
+    method: "get",
   });
 }

@@ -97,4 +97,14 @@ linksInfo.post("/editorLinksInfo", async (req, res) => {
   });
 });
 
+// 获取以及通过的友链信息
+linksInfo.get("/getAllPassLinksInfo", async (req, res) => {
+  let passLinksInfo = await LinksInfo.find().where("isPass").equals(true);
+  res.send({
+    status: 200,
+    msg: "获取通过的友链信息成功",
+    data: passLinksInfo,
+  });
+});
+
 module.exports = linksInfo;
