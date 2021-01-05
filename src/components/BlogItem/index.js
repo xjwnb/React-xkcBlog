@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 18:12:16
- * @LastEditTime: 2021-01-05 17:18:00
+ * @LastEditTime: 2021-01-05 20:51:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\components\BlogItem\index.js
@@ -23,6 +23,7 @@ function BlogItem(props) {
     time,
     _id,
     descriptionPicture,
+    description,
     visits,
     tags,
     content,
@@ -69,10 +70,10 @@ function BlogItem(props) {
             <Divider type="vertical" className="blog-divider-style" />
             <span className="iconfont icon-riqi"></span>
             {time}
-            <Divider type="vertical" />
+            <Divider type="vertical" className="blog-divider-style" />
             <span className="iconfont icon-redupaixu"></span>
             {visits}
-            <Divider type="vertical" />
+            <Divider type="vertical" className="blog-divider-style" />
             <span className="iconfont icon-tag-fill"></span>
             {tags.map((tag) => {
               return (
@@ -92,7 +93,7 @@ function BlogItem(props) {
                 }
               />
             </div>
-            <div className="blog-content-show">{formatContent}</div>
+            <div className="blog-content-show">{description}</div>
           </div>
           {/* <span>内容：</span> */}
           {/* <div className="cont" dangerouslySetInnerHTML={{__html: content}} /> */}

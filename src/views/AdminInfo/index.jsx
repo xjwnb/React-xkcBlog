@@ -7,7 +7,7 @@ import { getAdminInfo, postAdminInfo } from "@/requests/admin";
 // 引入样式
 import "./index.less";
 
-import { Button, Modal, Form, Input, Upload, Avatar } from "antd";
+import { Button, Modal, Form, Input, Upload, Avatar, Spin } from "antd";
 import { PlusOutlined, UploadOutlined, InboxOutlined } from "@ant-design/icons";
 
 export default function AdminInfo() {
@@ -19,6 +19,8 @@ export default function AdminInfo() {
   const [previewImage, setpreviewImage] = useState("");
   const [previewTitle, setpreviewTitle] = useState("");
   const [fileList, setfileList] = useState([]);
+  // 加载状态
+  const [spinning, setSpinning] = useState(true);
 
   // 表单默认信息
   const [initialValue, setInitialValue] = useState({});
@@ -34,9 +36,10 @@ export default function AdminInfo() {
             uid: "-1",
             name: "avatar.png",
             status: "done",
-            url: avatar
-          }
-        ])
+            url: avatar,
+          },
+        ]);
+        setSpinning(false);
       }
     });
   }, []);
@@ -148,58 +151,60 @@ export default function AdminInfo() {
     <div>
       <Box>
         <div className="admin-info">
-          <h3>
-            <span className="iconfont icon-sign-review-full"></span>
-            昵称：
-            {adminInfo.name}
-          </h3>
-          <h3>
-            <span className="iconfont icon-sign-review-full"></span>
-            头像：
-            <Avatar src={adminInfo.avatar} />
-          </h3>
-          <h3>
-            <span className="iconfont icon-nianling"></span>
-            码领：
-            {adminInfo.codeAge} 年
-          </h3>
-          <h3>
-            <span className="iconfont icon-shenfen"></span>
-            身份:
-            {adminInfo.identity}
-          </h3>
-          <h3>
-            <span className="iconfont icon-new"></span>
-            技术栈：
-            {technologyStack.map((item) => {
-              return (
-                <span className="technology" key={item}>
-                  {item}
-                </span>
-              );
-            })}
-          </h3>
-          <h3>
-            <span className="iconfont icon-QQ"></span>
-            QQ：
-            {adminInfo.qq}
-          </h3>
-          <h3>
-            <span className="iconfont icon-185078emailmailstreamline"></span>
-            邮箱：
-            {adminInfo.email}
-          </h3>
-          <h3>
-            <span className="iconfont icon-weixin"></span>
-            微信：
-            {adminInfo.wx}
-          </h3>
-          <h3>
-            <span className="iconfont icon-GitHub"></span>
-            Github：
-            {adminInfo.github}
-          </h3>
-          <Button onClick={editAdminInfo}>编辑信息</Button>
+          <Spin tip="Loading..." spinning={spinning}>
+            <h3>
+              <span className="iconfont icon-sign-review-full"></span>
+              昵称：
+              {adminInfo.name}
+            </h3>
+            <h3>
+              <span className="iconfont icon-sign-review-full"></span>
+              头像：
+              <Avatar src={adminInfo.avatar} />
+            </h3>
+            <h3>
+              <span className="iconfont icon-nianling"></span>
+              码领：
+              {adminInfo.codeAge} 年
+            </h3>
+            <h3>
+              <span className="iconfont icon-shenfen"></span>
+              身份:
+              {adminInfo.identity}
+            </h3>
+            <h3>
+              <span className="iconfont icon-new"></span>
+              技术栈：
+              {technologyStack.map((item) => {
+                return (
+                  <span className="technology" key={item}>
+                    {item}
+                  </span>
+                );
+              })}
+            </h3>
+            <h3>
+              <span className="iconfont icon-QQ"></span>
+              QQ：
+              {adminInfo.qq}
+            </h3>
+            <h3>
+              <span className="iconfont icon-185078emailmailstreamline"></span>
+              邮箱：
+              {adminInfo.email}
+            </h3>
+            <h3>
+              <span className="iconfont icon-weixin"></span>
+              微信：
+              {adminInfo.wx}
+            </h3>
+            <h3>
+              <span className="iconfont icon-GitHub"></span>
+              Github：
+              {adminInfo.github}
+            </h3>
+            <Button onClick={editAdminInfo}>编辑信息</Button>
+          </Spin>
           <Modal
             visible={visibleModal}
             title="编辑管理员信息"

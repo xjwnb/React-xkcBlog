@@ -39,6 +39,8 @@ function Article(props) {
     // current: 1,
     pageSize: 10,
   });
+  // 加载状态
+  const [spinning, setSpinning] = useState(true);
 
   /*   useEffect(() => {
     let allData;
@@ -289,6 +291,7 @@ function Article(props) {
           };
         });
         setdata(newData);
+        setSpinning(false);
       }
     });
   }, []);
@@ -355,7 +358,7 @@ function Article(props) {
           }
           return false;
         });
-        let deleteDataAfter = data.filter(data => !data._id === id);
+        let deleteDataAfter = data.filter((data) => !data._id === id);
         // data.splice(deleteID, 1);
         setdata(deleteDataAfter);
         return;
@@ -469,9 +472,15 @@ function Article(props) {
     <div>
       <Box>
         {/* {data ? ( */}
-        <div>
-          <Table columns={columns} dataSource={data} pagination={pagination} />
-        </div>
+        <Spin tip="Loading..." spinning={spinning}>
+          <div>
+            <Table
+              columns={columns}
+              dataSource={data}
+              pagination={pagination}
+            />
+          </div>
+        </Spin>
         {/* ) : (
           <Spin tip="Loading...">
             <Alert className="LoadingAlert" type="info" />

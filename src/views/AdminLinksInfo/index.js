@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-03 16:45:14
- * @LastEditTime: 2021-01-04 20:34:57
+ * @LastEditTime: 2021-01-05 20:40:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-blog\src\views\AdminLinksInfo\index.js
@@ -24,6 +24,7 @@ import {
   Modal,
   Form,
   Input,
+  Spin,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -52,6 +53,8 @@ export default function AdminLinksInfo() {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   // 需要被删除的 linkInfo
   const [deleteLinkInfo, setDeleteLinkInfo] = useState({});
+  // 加载状态
+  const [spinning, setSpinning] = useState(true);
 
   const notPassColumns = [
     {
@@ -282,6 +285,7 @@ export default function AdminLinksInfo() {
         });
         setNotPassLinksInfo(notPassInfo);
         setPassLinksInfo(passInfo);
+        setSpinning(false);
       }
     });
   }, []);
@@ -292,100 +296,104 @@ export default function AdminLinksInfo() {
 
   return (
     <Box>
-      <div className="adminLinksInfo-is-pass">
-        <span className="pass-span-font">已通过 {passLinksInfo.length} 条</span>
-        <Table columns={notPassColumns} dataSource={passLinksInfo} />
-      </div>
-      <div className="adminLinksInfo-not-pass">
-        <span className="not-pass-span-font">
-          未通过 {notPassLinksInfo.length} 条
-        </span>
-        <Table columns={notPassColumns} dataSource={notPassLinksInfo} />
-      </div>
+      <Spin tip="Loading..." spinning={spinning}>
+        <div className="adminLinksInfo-is-pass">
+          <span className="pass-span-font">
+            已通过 {passLinksInfo.length} 条
+          </span>
+          <Table columns={notPassColumns} dataSource={passLinksInfo} />
+        </div>
+        <div className="adminLinksInfo-not-pass">
+          <span className="not-pass-span-font">
+            未通过 {notPassLinksInfo.length} 条
+          </span>
+          <Table columns={notPassColumns} dataSource={notPassLinksInfo} />
+        </div>
 
-      {/* 表单 Modal */}
-      <Modal
-        title="编辑友链信息"
-        getContainer={false}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form
-          {...layout}
-          form={form}
-          name="basic"
-          initialValues={initialValuesForm}
-          /* onFinish={onFinish}
-          onFinishFailed={onFinishFailed} */
+        {/* 表单 Modal */}
+        <Modal
+          title="编辑友链信息"
+          getContainer={false}
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
         >
-          {/* 名称 */}
-          <Form.Item
-            label="名称"
-            name="websiteName"
-            rules={[
-              {
-                required: true,
-                message: "请输入你的网址名称！",
-              },
-            ]}
+          <Form
+            {...layout}
+            form={form}
+            name="basic"
+            initialValues={initialValuesForm}
+            /* onFinish={onFinish}
+          onFinishFailed={onFinishFailed} */
           >
-            <Input />
-          </Form.Item>
+            {/* 名称 */}
+            <Form.Item
+              label="名称"
+              name="websiteName"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入你的网址名称！",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-          {/* 网址 */}
-          <Form.Item
-            label="网址"
-            name="website"
-            rules={[
-              {
-                required: true,
-                message: "请输入你的网址！",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+            {/* 网址 */}
+            <Form.Item
+              label="网址"
+              name="website"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入你的网址！",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-          {/* 头像 */}
-          <Form.Item
-            label="头像"
-            name="authorImgUrl"
-            rules={[
-              {
-                required: true,
-                message: "请输入你的网址头像链接！",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+            {/* 头像 */}
+            <Form.Item
+              label="头像"
+              name="authorImgUrl"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入你的网址头像链接！",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-          {/* 描述 */}
-          <Form.Item
-            label="描述"
-            name="describe"
-            rules={[
-              {
-                required: true,
-                message: "请输入你的网址描述信息！",
-              },
-            ]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-        </Form>
-      </Modal>
+            {/* 描述 */}
+            <Form.Item
+              label="描述"
+              name="describe"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入你的网址描述信息！",
+                },
+              ]}
+            >
+              <Input.TextArea />
+            </Form.Item>
+          </Form>
+        </Modal>
 
-      {/* 删除 Modal */}
-      <Modal
-        title="提示"
-        visible={isDeleteModalVisible}
-        onOk={handleDeleteOk}
-        onCancel={handleDeleteCancel}
-      >
-        确定是否需要删除 id: {deleteLinkInfo.id} 的友链信息！
-      </Modal>
+        {/* 删除 Modal */}
+        <Modal
+          title="提示"
+          visible={isDeleteModalVisible}
+          onOk={handleDeleteOk}
+          onCancel={handleDeleteCancel}
+        >
+          确定是否需要删除 id: {deleteLinkInfo.id} 的友链信息！
+        </Modal>
+      </Spin>
     </Box>
   );
 }
