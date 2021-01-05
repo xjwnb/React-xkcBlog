@@ -78,10 +78,10 @@ class WriteMyBlog extends Component {
     values.descriptPicture = this.state.descriptPicture;
     values.visits = 0;
     values.tags = this.state.selectedTags;
-    console.log("onFinish", values);
+    // console.log("onFinish", values);
 
     publish(values).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         this.setState({
           isLoading: false,
@@ -110,11 +110,11 @@ class WriteMyBlog extends Component {
         message.error("发表失败！");
       }
     });
-    console.log(values);
+    // console.log(values);
   };
   // 发表失败事件
   onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
     message.error("请按要求输入信息");
   };
 
@@ -126,7 +126,7 @@ class WriteMyBlog extends Component {
   };
 
   onTimeOk = (value) => {
-    console.log("onOk: ", value);
+    // console.log("onOk: ", value);
   };
 
   // BraftEditor 富文本编辑器修改触发
@@ -137,7 +137,7 @@ class WriteMyBlog extends Component {
   };
 
   uploadHandler = (param) => {
-    console.log(param);
+    // console.log(param);
     if (!param.file) {
       return false;
     }
@@ -152,7 +152,7 @@ class WriteMyBlog extends Component {
         ]),
       },
       () => {
-        console.log(this.state.editorState);
+        // console.log(this.state.editorState);
       }
     );
   };
@@ -196,7 +196,6 @@ class WriteMyBlog extends Component {
 
   componentDidMount() {
     getTagInfo().then((res) => {
-      console.log(res.data);
       this.setState({
         tagsData: res.data,
       });
@@ -208,7 +207,7 @@ class WriteMyBlog extends Component {
   tagsHandleChange(tag, checked) {
     const { selectedTags } = this.state;
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-    console.log('You are interested in: ', nextSelectedTags);
+    // console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
   }
 
@@ -277,6 +276,15 @@ class WriteMyBlog extends Component {
                 />
               </Modal>
             </div>
+          </Form.Item>
+
+          {/* 描述信息 */}
+          <Form.Item
+            label="描述"
+            name="description"
+            rules={[{ required: true, message: "请输入你的描述!" }]}
+          >
+            <Input />
           </Form.Item>
 
           {/* 作者 */}

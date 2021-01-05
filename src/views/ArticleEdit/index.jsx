@@ -127,6 +127,7 @@ function ArticleEdit(props) {
         _id,
         title,
         descriptionPicture,
+        description,
         author,
         time,
         isShowTop,
@@ -147,11 +148,20 @@ function ArticleEdit(props) {
           url: `${descriptionPicture}`,
         },
       ]);
-      setgetData({ _id, title, descriptionPicture, author, time, content });
+      setgetData({
+        _id,
+        title,
+        descriptionPicture,
+        description,
+        author,
+        time,
+        content,
+      });
       setdefaultValue({
         _id,
         title,
         descriptPicture: descriptionPicture,
+        description,
         author,
         time,
         isShowTop,
@@ -160,6 +170,7 @@ function ArticleEdit(props) {
         title,
         author,
         time: monment(time),
+        description,
         content: BraftEditor.createEditorState(content),
       });
       setTime(time);
@@ -263,9 +274,11 @@ function ArticleEdit(props) {
 
   // 选择标签时候触发
   const tagsHandleChange = (tag, checked) => {
-    const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t.tagName !== tag.tagName);
+    const nextSelectedTags = checked
+      ? [...selectedTags, tag]
+      : selectedTags.filter((t) => t.tagName !== tag.tagName);
     setSelectedTags(nextSelectedTags);
-  }
+  };
 
   return (
     <div>
@@ -285,6 +298,8 @@ function ArticleEdit(props) {
             initialValues={{
               title: defaultValue.title,
               author: defaultValue.author,
+              description: defaultValue.description,
+              // ...defaultValue,
               // time: monment(defaultValue.time),
               time,
             }}
@@ -334,6 +349,14 @@ function ArticleEdit(props) {
               </div>
             </Form.Item>
 
+            <Form.Item
+              label="描述"
+              name="description"
+              rules={[{ required: true, message: "请输入你的描述!" }]}
+            >
+              <Input />
+            </Form.Item>
+
             {/* 作者 */}
             <Form.Item
               label="作者"
@@ -361,11 +384,14 @@ function ArticleEdit(props) {
               <Form.Item
                 rules={[{ required: true, message: "请选择相关标签!" }]}
               >
-                {tagsData && selectedTags &&
+                {tagsData &&
+                  selectedTags &&
                   tagsData.map((tag) => (
                     <Tag.CheckableTag
                       key={tag.tagName}
-                      checked={selectedTags.some(select => select.tagName === tag.tagName)}
+                      checked={selectedTags.some(
+                        (select) => select.tagName === tag.tagName
+                      )}
                       onChange={(checked) => tagsHandleChange(tag, checked)}
                     >
                       {tag.tagName}

@@ -11,7 +11,7 @@ import { WriteMyBlog, Box } from "../../components";
 function WriteBlog(props) {
 
   useEffect(() => {
-    console.log(props.login.isLogin)
+    // console.log(props.login.isLogin)
     let timer = null
     // 如果没有登录，跳转到登录页面
     if (!props.login.isLogin) {

@@ -82,3 +82,62 @@ img {
   font-size: 1.1rem;
   font-weight: 700;
 }
+
+// 修改
+.blog-item {
+  display: block;
+  width: 100%;
+
+  .ant-divider {
+    color: #000000 !important;
+  }
+  .blog-flex-div {
+    display: flex;
+    .blog-img {
+      width: 300px;
+      height: 200px;
+      overflow: hidden;
+      margin-right: 2rem;
+      .ant-image-img {
+        width: 300px;
+        height: auto;
+        transform: translateY(-20%);
+        // top: 100px;
+        transition: all 1s;
+      }
+    }
+
+    /* .blog-img {
+      width: 100%;
+      height: auto;
+      .ant-image {
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    } */
+  }
+}
+.blog {
+  &:hover {
+    .blog-img {
+      .ant-image-img {
+        transform: scale(2);
+      }
+    }
+  }
+}
+.blog-divider-style {
+  background-color: #000000;
+}
+.blog-content-show {
+  width: 350px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  // font-weight: 700;
+  font-size: 1rem;
+}

@@ -16,7 +16,7 @@ import {
 } from "antd";
 
 import { connect } from "react-redux";
-
+// 请求
 import {
   getBlogInfo,
   editTopShowTop,
@@ -29,7 +29,6 @@ import "./index.less";
 
 function Article(props) {
   // const [blogInfo, setBlogInfo] = useState([])
-  const [columns, setcolumns] = useState([]);
   const [data, setdata] = useState(undefined);
   const [visible, setvisible] = useState(false);
   const [deleteTitle, setdeleteTitle] = useState("");
@@ -41,7 +40,7 @@ function Article(props) {
     pageSize: 10,
   });
 
-  useEffect(() => {
+  /*   useEffect(() => {
     let allData;
     let timer = null;
 
@@ -278,24 +277,206 @@ function Article(props) {
       setvisible(false);
       return;
     });
-  }
+  } */
+  useEffect(() => {
+    // 请求数据
+    getBlogInfo().then((res) => {
+      if (res.status === 200) {
+        let newData = res.data.map((data) => {
+          return {
+            ...data,
+            key: data.id.toString(),
+          };
+        });
+        setdata(newData);
+      }
+    });
+  }, []);
+
+  // 点击编辑事件
+  // 编辑按钮
+  const editBlog = (id) => {
+    props.history.push(`/admin/edit/${id}`);
+  };
+
+  // 修改 isShouTop 状态
+  const changeShowTop = (id) => {
+    editTopShowTop(id).then((res) => {
+      // if (res.status === 200) {
+      //   setdata(res.data);
+      // }
+      let newData = data.map((item, index) => {
+        if (item._id === id) {
+          return {
+            ...item,
+            isShowTop: !item.isShowTop,
+          };
+        }
+        return item;
+      });
+      setdata(newData);
+    });
+  };
+
+  // 删除按钮
+  const deleteBlog = async (id) => {
+    setvisible(true);
+    setdeleteID(id);
+    let thisBlogTitle = data.find((item) => {
+      if (item._id === id) {
+        return true;
+      }
+      return false;
+    });
+    await setdeleteTitle(thisBlogTitle.title);
+
+    //  deleteBlogInfo(id).then(res => {
+    //   console.log(res)
+    // })
+  };
+
+  // Model 取消按钮
+  const handleCancel = () => {
+    setvisible(false);
+  };
+
+  // Model 确定按钮
+  const handleOk = () => {
+    let id = deleteID;
+    setconfirmLoading(true);
+    deleteBlogInfo(id).then((res) => {
+      if (res.status === 200) {
+        setconfirmLoading(false);
+        message.success("删除成功！");
+        setvisible(false);
+        let deleteID = data.findIndex((item) => {
+          if (item._id === id) {
+            return true;
+          }
+          return false;
+        });
+        let deleteDataAfter = data.filter(data => !data._id === id);
+        // data.splice(deleteID, 1);
+        setdata(deleteDataAfter);
+        return;
+      }
+      setconfirmLoading(false);
+      message.error("删除失败！");
+      setvisible(false);
+      return;
+    });
+  };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "标题",
+      dataIndex: "title",
+      key: "title",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "作者",
+      dataIndex: "author",
+      key: "author",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "描述图片",
+      dataIndex: "descriptionPicture",
+      key: "descriptionPicture",
+      render: (text) => (
+        <div className="descriptionPicture">
+          <Image src={text} />
+        </div>
+      ),
+    },
+    {
+      title: "描述",
+      dataIndex: "description",
+      key: "description",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "时间",
+      dataIndex: "time",
+      key: "time",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "是否置顶",
+      dataIndex: "isShowTop",
+      key: "isShowTop",
+      render: (text, record) => (
+        <Switch
+          defaultChecked={false}
+          checked={text}
+          onChange={changeShowTop.bind(this, record._id)}
+        />
+      ),
+    },
+    {
+      title: "标签",
+      dataIndex: "tags",
+      key: "tags",
+      render: (tags, record) => {
+        return tags.map((tag) => {
+          return (
+            <Tag key={tag.tagName} color={tag.tagColor}>
+              {tag.tagName}
+            </Tag>
+          );
+        });
+      },
+    },
+    {
+      title: "操作",
+      dataIndex: "actions",
+      key: "actions",
+      render: (text, record) => {
+        return (
+          <div>
+            <Modal
+              title="是否删除该博客"
+              visible={visible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              // confirmLoading={confirmLoading}
+              // okText={confirmLoading ? "正在删除中" : "确定"}
+            >
+              {/* 标题：<span>{deleteTitle}</span> */}
+            </Modal>
+            <Space size="middle">
+              <Button type="primary" onClick={editBlog.bind(this, record._id)}>
+                编辑
+              </Button>
+              <Button danger onClick={deleteBlog.bind(this, record._id)}>
+                删除
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+    },
+  ];
 
   return (
     <div>
       <Box>
-        {data ? (
-          <div>
-            <Table
-              columns={columns}
-              dataSource={data}
-              pagination={pagination}
-            />
-          </div>
-        ) : (
+        {/* {data ? ( */}
+        <div>
+          <Table columns={columns} dataSource={data} pagination={pagination} />
+        </div>
+        {/* ) : (
           <Spin tip="Loading...">
             <Alert className="LoadingAlert" type="info" />
           </Spin>
-        )}
+        )} */}
       </Box>
     </div>
   );

@@ -15,7 +15,7 @@ import { Form, Input, Button, Layout } from "antd";
 const { Content } = Layout;
 
 function Login(props) {
-  console.log(props);
+  // console.log(props);
   
   const [form] = Form.useForm();
   const [layout] = useState({
@@ -64,7 +64,7 @@ function Login(props) {
     };
     login(data).then((res) => {
       if (res.status === 200) {
-        console.log(res)
+        // console.log(res)
         // props.successLogin()
         props.history.push({
           pathname: res.url,

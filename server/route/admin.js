@@ -16,13 +16,13 @@ console.log(JSON.stringify(copy)); */
 // console.log(Object.prototype.toString.call(resultsQuery));
 // console.log(resultsQuery.toString());
 
-admin.get("/skip",async (req, res) => {
+admin.get("/skip", async (req, res) => {
   let data = await BlogInfo.find().skip(0).limit(1);
   res.send({
     status: 200,
-    data: data
-  })
-})
+    data: data,
+  });
+});
 
 // get
 admin.get("/user", (req, res) => {
@@ -68,18 +68,30 @@ admin.post("/login", async (req, res) => {
 });
 
 // 发表
-admin.post("/publish", (req, res) => {
-  let { title, author, time, content, descriptPicture, visits, tags } = req.body;
-  if (
-    title.length > 0 &&
-    author.length > 0 &&
-    time.length > 0 
-  ) {
+admin.post("/publish", async (req, res) => {
+  let {
+    title,
+    author,
+    time,
+    content,
+    descriptPicture,
+    description,
+    visits,
+    tags,
+  } = req.body;
+  console.log(description)
+  let count = await BlogInfo.countDocuments();
+  let lastBlogInfo = await BlogInfo.find()
+    .limit(1)
+    .skip(count ? count - 1 : 0);
+  if (title.length > 0 && author.length > 0 && time.length > 0) {
     console.log("成功");
     BlogInfo.create({
+      id: lastBlogInfo[0] ? lastBlogInfo[0].id + 1 : 1,
       title,
       author,
       descriptionPicture: descriptPicture,
+      description,
       time,
       isShowTop: false,
       visits,
@@ -173,17 +185,18 @@ admin.get("/getBlogInfoById", async (req, res) => {
 // 编辑博客
 admin.post("/editorBlogInfo", async (req, res) => {
   let id = req.body._id;
-  let { _id, title, descriptPicture, author, content, tags } = req.body;
-  
+  let { _id, title, descriptPicture,description, author, content, tags } = req.body;
+
   let time = req.body.time;
   // console.log(req.body.time);
   // console.log(descriptPicture.slice(0, 8));
-  console.log(time)
+  console.log(time);
   await BlogInfo.findByIdAndUpdate(
     { _id },
     {
       title,
       descriptionPicture: descriptPicture,
+      description,
       author,
       time,
       tags,

@@ -46,7 +46,7 @@ export const adminRouter = [
     id: 5,
     pathName: "/admin/linksInfo",
     component: AdminLinksInfo,
-    title: "友链信息",
+    title: "友链管理",
     exact: true,
   },
   {
